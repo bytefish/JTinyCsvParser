@@ -76,6 +76,7 @@ public class CsvParserTest {
 
         // Simulate CSV Data:
         csvData.add("Philipp,Wagner,1986-05-12");
+        csvData.add(""); // An empty line... Should be skipped.
         csvData.add("Max,Musterman,2000-01-07");
 
         List<CsvMappingResult<Person>> result =  parser.Parse(csvData)
@@ -85,17 +86,22 @@ public class CsvParserTest {
 
         Assert.assertEquals(2, result.size());
 
-        Assert.assertEquals("Philipp", result.get(0).getResult().firstName);
-        Assert.assertEquals("Wagner", result.get(0).getResult().lastName);
-        Assert.assertEquals(1986, result.get(0).getResult().getBirthDate().getYear());
-        Assert.assertEquals(5, result.get(0).getResult().getBirthDate().getMonthValue());
-        Assert.assertEquals(12, result.get(0).getResult().getBirthDate().getDayOfMonth());
+        // Get the first person:
+        Person person0 = result.get(0).getResult();
 
+        Assert.assertEquals("Philipp", person0.firstName);
+        Assert.assertEquals("Wagner", person0.lastName);
+        Assert.assertEquals(1986, person0.getBirthDate().getYear());
+        Assert.assertEquals(5, person0.getBirthDate().getMonthValue());
+        Assert.assertEquals(12, person0.getBirthDate().getDayOfMonth());
 
-        Assert.assertEquals("Max", result.get(1).getResult().firstName);
-        Assert.assertEquals("Musterman", result.get(1).getResult().lastName);
-        Assert.assertEquals(2000, result.get(1).getResult().getBirthDate().getYear());
-        Assert.assertEquals(1, result.get(1).getResult().getBirthDate().getMonthValue());
-        Assert.assertEquals(7, result.get(1).getResult().getBirthDate().getDayOfMonth());
+        // Get the second person:
+        Person person1 = result.get(1).getResult();
+
+        Assert.assertEquals("Max", person1.firstName);
+        Assert.assertEquals("Musterman", person1.lastName);
+        Assert.assertEquals(2000, person1.getBirthDate().getYear());
+        Assert.assertEquals(1, person1.getBirthDate().getMonthValue());
+        Assert.assertEquals(7, person1.getBirthDate().getDayOfMonth());
     }
 }
