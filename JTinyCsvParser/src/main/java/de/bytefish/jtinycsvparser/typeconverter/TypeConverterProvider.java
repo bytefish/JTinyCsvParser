@@ -20,6 +20,9 @@ public class TypeConverterProvider {
         typeConverters = new HashMap<>();
 
         Add(new IntegerConverter(NumberFormat.getNumberInstance()));
+        Add(new StringConverter());
+        Add(new LocalDateTimeConverter());
+        Add(new LocalDateConverter());
     }
 
     public <TTargetType> TypeConverterProvider Add(ITypeConverter<TTargetType> typeConverter) {
