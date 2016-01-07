@@ -37,7 +37,7 @@ public class CsvParser<TEntity> implements ICsvParser<TEntity> {
                 .skip(options.getSkipHeader() ? 1 : 0) // Skip the line or not?
                 .filter(s1 -> !StringUtils.isNullOrWhiteSpace(s1)) // Filter Lines with Content!
                 .map(s -> options.getTokenizer().tokenize(s)) // Tokenize the Line into parts
-                .map(a -> mapping.Map(a)); // Map the Result to the strongly-typed object
+                .map(a -> mapping.Map(a)); // MapProperty the Result to the strongly-typed object
     }
 
     public Stream<CsvMappingResult<TEntity>> Parse(Iterable<String> csvData) {

@@ -43,9 +43,13 @@ public abstract class CsvMapping<TEntity> {
         this.typeConverterProvider = new TypeConverterProvider();
     }
 
-    public <TProperty> void Map(int columnIndex, Type targetType, BiConsumer<TEntity, TProperty> setter) {
+    public <TProperty> void MapProperty(int columnIndex, Type targetType, BiConsumer<TEntity, TProperty> setter) {
        ITypeConverter<TProperty> converter = typeConverterProvider.Resolve(targetType);
 
+        MapProperty(columnIndex, targetType, setter, converter);
+    }
+
+    public <TProperty> void MapProperty(int columnIndex, Type targetType, BiConsumer<TEntity, TProperty> setter, ITypeConverter<TProperty> converter) {
         csvPropertyMappings.add(new IndexToPropertyMapping(columnIndex, new CsvPropertyMapping(setter, converter)));
     }
 

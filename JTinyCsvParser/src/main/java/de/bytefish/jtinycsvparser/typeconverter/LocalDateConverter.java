@@ -4,20 +4,26 @@
 package de.bytefish.jtinycsvparser.typeconverter;
 
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class LocalDateConverter implements ITypeConverter<LocalDate> {
 
-    public LocalDateConverter() {
+    private DateTimeFormatter dateTimeFormatter;
 
+    public LocalDateConverter() {
+        this(DateTimeFormatter.ISO_DATE);
+    }
+
+    public LocalDateConverter(DateTimeFormatter dateTimeFormatter) {
+        this.dateTimeFormatter = dateTimeFormatter;
     }
 
     @Override
     public LocalDate convert(String value) {
-
-        LocalDate a = LocalDate.parse(value);
-        return a;
+        return LocalDate.parse(value, dateTimeFormatter);
     }
 
     @Override

@@ -3,24 +3,16 @@
 
 package de.bytefish.jtinycsvparser;
 
-import com.sun.deploy.Environment;
-import com.sun.deploy.perf.PerfRollup;
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader;
 import de.bytefish.jtinycsvparser.builder.IObjectCreator;
 import de.bytefish.jtinycsvparser.mapping.CsvMapping;
 import de.bytefish.jtinycsvparser.mapping.CsvMappingResult;
-import de.bytefish.jtinycsvparser.mapping.CsvMappingTest;
 import junit.framework.Assert;
 import org.junit.Test;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static org.junit.Assert.*;
 
 public class CsvParserTest {
 
@@ -60,9 +52,9 @@ public class CsvParserTest {
         public PersonMapping(IObjectCreator creator) {
             super(creator);
 
-            Map(0, String.class, Person::setFirstName);
-            Map(1, String.class, Person::setLastName);
-            Map(2, LocalDate.class, Person::setBirthDate);
+            MapProperty(0, String.class, Person::setFirstName);
+            MapProperty(1, String.class, Person::setLastName);
+            MapProperty(2, LocalDate.class, Person::setBirthDate);
         }
     }
 
