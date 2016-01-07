@@ -3,21 +3,32 @@
 
 package de.bytefish.jtinycsvparser.tokenizer;
 
+import java.util.Arrays;
+
 public class StringSplitTokenizer implements ITokenizer {
 
     private String columnDelimiter;
-    private boolean trimLine;
+    private boolean trimValues;
 
-    public StringSplitTokenizer(String columnDelimiter, boolean trimLine) {
+    public StringSplitTokenizer(String columnDelimiter, boolean trimValues) {
         this.columnDelimiter = columnDelimiter;
-        this.trimLine = trimLine;
+        this.trimValues = trimValues;
     }
 
     @Override
     public String[] tokenize(String input) {
-        if(trimLine) {
-            return input.trim().split(columnDelimiter);
+        String[] result = input.split(columnDelimiter);
+        if(trimValues) {
+            result = trimAllElements(result);
         }
-        return input.split(columnDelimiter);
+        return result;
+    }
+
+    private String[] trimAllElements(String[] elements) {
+        String[] result = new String[elements.length];
+        for(int pos = 0; pos < elements.length; pos++) {
+            result[pos] = elements[pos].trim();
+        }
+        return result;
     }
 }

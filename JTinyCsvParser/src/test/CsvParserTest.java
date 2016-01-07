@@ -74,8 +74,7 @@ public class CsvParserTest {
 
         ArrayList<String> csvData = new ArrayList<>();
 
-        LocalDate a = LocalDate.parse("1986-05-12");
-
+        // Simulate CSV Data:
         csvData.add("Philipp,Wagner,1986-05-12");
         csvData.add("Max,Musterman,2000-01-07");
 
