@@ -17,9 +17,8 @@ please consult the full User Guide of the official documentation.
 Imagine we have list of Persons in a CSV file ``persons.csv`` with their first name, last name and birthdate.
 
 ```
-FirstName;LastName;BirthDate
-Philipp;Wagner;1986/05/12
-Max;Musterman;2014/01/02
+Philipp,Wagner,1986/05/12
+Max,Musterman,2014/01/02
 ```
 
 The corresponding domain model in our system might look like this.
