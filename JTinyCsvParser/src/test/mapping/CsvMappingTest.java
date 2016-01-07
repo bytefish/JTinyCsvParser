@@ -31,7 +31,6 @@ public class CsvMappingTest {
 
     @org.junit.Test
     public void testMapProperty() throws Exception {
-
         // The ObjectCreator used to instantiate a new Object:
         IObjectCreator<SampleEntity> objectCreator = () -> new SampleEntity();
         // The Mapping to use for mapping between a CSV File and the Object:

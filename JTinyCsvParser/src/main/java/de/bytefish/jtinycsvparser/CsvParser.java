@@ -21,7 +21,7 @@ public class CsvParser<TEntity> implements ICsvParser<TEntity> {
 
     @Override
     public Stream<CsvMappingResult<TEntity>> Parse(Iterable<String> csvData) {
-        return StreamSupport.stream(csvData.spliterator(), false)
+        return StreamSupport.stream(csvData.spliterator(), options.getParallel())
                 .skip(options.getSkipHeader() ? 1 : 0) // Skip the line or not?
                 .filter(s1 -> s1 != null && s1 != "") // Filter Lines with Content!
                 .map(s -> options.getTokenizer().tokenize(s)) // Tokenize the Line into parts

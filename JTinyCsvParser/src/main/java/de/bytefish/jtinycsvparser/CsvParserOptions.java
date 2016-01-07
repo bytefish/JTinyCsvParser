@@ -4,16 +4,32 @@
 package de.bytefish.jtinycsvparser;
 
 import de.bytefish.jtinycsvparser.tokenizer.ITokenizer;
+import de.bytefish.jtinycsvparser.tokenizer.StringSplitTokenizer;
 
 public class CsvParserOptions {
 
     private boolean skipHeader;
 
+    private boolean parallel;
+
     private ITokenizer tokenizer;
 
+    public CsvParserOptions(boolean skipHeader, String delimiter) {
+        this(skipHeader, new StringSplitTokenizer(delimiter, false));
+    }
+
+    public CsvParserOptions(boolean skipHeader, String delimiter, boolean parallel) {
+        this(skipHeader, new StringSplitTokenizer(delimiter, false), parallel);
+    }
+
     public CsvParserOptions(boolean skipHeader, ITokenizer tokenizer) {
+        this(skipHeader, tokenizer, false);
+    }
+
+    public CsvParserOptions(boolean skipHeader, ITokenizer tokenizer, boolean parallel) {
         this.skipHeader = skipHeader;
         this.tokenizer = tokenizer;
+        this.parallel = parallel;
     }
 
     public boolean getSkipHeader() {
@@ -22,5 +38,9 @@ public class CsvParserOptions {
 
     public ITokenizer getTokenizer() {
         return tokenizer;
+    }
+
+    public boolean getParallel() {
+        return parallel;
     }
 }
