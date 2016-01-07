@@ -1,3 +1,6 @@
+// Copyright (c) Philipp Wagner. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 package de.bytefish.jtinycsvparser;
 
 import de.bytefish.jtinycsvparser.mapping.CsvMapping;
@@ -19,8 +22,9 @@ public class CsvParser<TEntity> implements ICsvParser<TEntity> {
     @Override
     public Stream<CsvMappingResult<TEntity>> Parse(Iterable<String> csvData) {
         return StreamSupport.stream(csvData.spliterator(), false)
-                .skip(options.getSkipHeader() ? 1 : 0)
-                .map(s -> options.getTokenizer().tokenize(s))
-                .map(a -> mapping.Map(a));
+                .skip(options.getSkipHeader() ? 1 : 0) // Skip the line or not?
+                .filter(s1 -> s1 != null && s1 != "") // Filter Lines with Content!
+                .map(s -> options.getTokenizer().tokenize(s)) // Tokenize the Line into parts
+                .map(a -> mapping.Map(a)); // Map the Result to the strongly-typed object
     }
 }

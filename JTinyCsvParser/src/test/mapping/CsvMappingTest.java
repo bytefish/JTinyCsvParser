@@ -1,18 +1,11 @@
+// Copyright (c) Philipp Wagner. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 package de.bytefish.jtinycsvparser.mapping;
 
 import de.bytefish.jtinycsvparser.builder.IObjectCreator;
 import junit.framework.Assert;
 
-import java.lang.invoke.MethodHandle;
-import java.lang.reflect.Method;
-import java.lang.reflect.ParameterizedType;
-import java.util.function.BiConsumer;
-
-import static org.junit.Assert.*;
-
-/**
- * Created by philipp on 1/6/2016.
- */
 public class CsvMappingTest {
 
     public class SampleEntity {
@@ -21,21 +14,16 @@ public class CsvMappingTest {
 
         }
 
-        public Integer A;
+        public int A;
 
-        public void setX(Integer val) {
+        public void setX(int val) {
             A = val;
         }
     }
 
     public class SampleEntityMapping extends CsvMapping<SampleEntity> {
-        public SampleEntityMapping() {
-            super(new IObjectCreator() {
-                @Override
-                public Object create() {
-                    return new SampleEntity();
-                }
-            });
+        public SampleEntityMapping(IObjectCreator<SampleEntity> creator) {
+            super(creator);
 
             Map(0, Integer.TYPE, SampleEntity::setX);
         }
@@ -44,11 +32,15 @@ public class CsvMappingTest {
     @org.junit.Test
     public void testMapProperty() throws Exception {
 
-        CsvMapping<SampleEntity> csvMapping = new SampleEntityMapping();
-
+        // The ObjectCreator used to instantiate a new Object:
+        IObjectCreator<SampleEntity> objectCreator = () -> new SampleEntity();
+        // The Mapping to use for mapping between a CSV File and the Object:
+        CsvMapping<SampleEntity> csvMapping = new SampleEntityMapping(objectCreator);
+        // Perform an actual mapping between a tokenized CSV Line and the object:
         CsvMappingResult<SampleEntity> result = csvMapping.Map(new String[] {"1"});
-
+        // There shouldn't be an error:
         Assert.assertEquals(null, result.getError());
-        Assert.assertEquals(new Integer(1), result.getResult().A);
+        // And the Property A should be 1:
+        Assert.assertEquals(1, result.getResult().A);
     }
 }

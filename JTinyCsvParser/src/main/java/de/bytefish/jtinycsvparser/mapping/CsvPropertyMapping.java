@@ -1,9 +1,11 @@
+// Copyright (c) Philipp Wagner. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 package de.bytefish.jtinycsvparser.mapping;
 
 import de.bytefish.jtinycsvparser.typeconverter.ITypeConverter;
 
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 public class CsvPropertyMapping<TEntity, TProperty> implements ICsvPropertyMapping<TEntity> {
 
@@ -16,16 +18,12 @@ public class CsvPropertyMapping<TEntity, TProperty> implements ICsvPropertyMappi
     }
 
     public boolean tryMapValue(TEntity entity, String value) {
-        // Initialize:
-        TProperty result = typeConverter.convert(value);
-
-        // Set the Value in the Entity:
         try {
-            setter.accept(entity, result);
+            setter.accept(entity, typeConverter.convert(value));
+
+            return true;
         } catch(Exception e) {
-
+            return false;
         }
-
-        return true;
     }
 }

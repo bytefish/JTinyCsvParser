@@ -1,11 +1,11 @@
+// Copyright (c) Philipp Wagner. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 package de.bytefish.jtinycsvparser.typeconverter;
 
 import java.lang.reflect.Type;
 import java.text.NumberFormat;
 
-/**
- * Created by philipp on 1/6/2016.
- */
 public class IntegerConverter implements ITypeConverter<Integer> {
 
     private NumberFormat numberFormat;

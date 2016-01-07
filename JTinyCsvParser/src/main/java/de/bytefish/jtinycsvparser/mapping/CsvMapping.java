@@ -1,11 +1,12 @@
+// Copyright (c) Philipp Wagner. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 package de.bytefish.jtinycsvparser.mapping;
 
 import de.bytefish.jtinycsvparser.builder.IObjectCreator;
 import de.bytefish.jtinycsvparser.typeconverter.ITypeConverter;
 import de.bytefish.jtinycsvparser.typeconverter.TypeConverterProvider;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.function.BiConsumer;
@@ -43,12 +44,9 @@ public abstract class CsvMapping<TEntity> {
     }
 
     public <TProperty> void Map(int columnIndex, Type targetType, BiConsumer<TEntity, TProperty> setter) {
-        // Resolve by TargetType:
        ITypeConverter<TProperty> converter = typeConverterProvider.Resolve(targetType);
-        // Map between both:
-       IndexToPropertyMapping indexToPropertyMapping = new IndexToPropertyMapping(columnIndex, new CsvPropertyMapping(setter, converter));
-        // Add:
-        csvPropertyMappings.add(indexToPropertyMapping);
+
+        csvPropertyMappings.add(new IndexToPropertyMapping(columnIndex, new CsvPropertyMapping(setter, converter)));
     }
 
     public CsvMappingResult<TEntity> Map(String[] values) {
