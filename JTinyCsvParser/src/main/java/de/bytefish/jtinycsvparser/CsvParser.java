@@ -46,8 +46,8 @@ public class CsvParser<TEntity> implements ICsvParser<TEntity> {
     }
 
     public Stream<CsvMappingResult<TEntity>> ReadFromFile(Path path, Charset charset) {
-        try(Stream<String> stream = Files.lines(path, charset)) {
-            return Parse(stream);
+        try {
+            return Parse(Files.lines(path, charset));
         } catch(IOException e) {
             throw new RuntimeException(e);
         }

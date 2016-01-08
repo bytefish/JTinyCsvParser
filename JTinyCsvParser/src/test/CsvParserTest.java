@@ -6,7 +6,8 @@ package de.bytefish.jtinycsvparser;
 import de.bytefish.jtinycsvparser.builder.IObjectCreator;
 import de.bytefish.jtinycsvparser.mapping.CsvMapping;
 import de.bytefish.jtinycsvparser.mapping.CsvMappingResult;
-import junit.framework.Assert;
+
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.time.LocalDate;

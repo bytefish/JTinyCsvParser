@@ -10,6 +10,7 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
@@ -19,6 +20,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Ignore("Integration Test to evaluate the Performance")
 public class IntegrationTest {
@@ -71,18 +73,19 @@ public class IntegrationTest {
     @Test
     public void testReadFromFile_SequentialRead() {
 
-        try {
+        MeasurementUtils.MeasureElapsedTime("LocalWeatherData_SequentialRead", () -> {
+            try(Stream<String> stream = Files.lines(FileSystems.getDefault().getPath("C:\\Users\\philipp\\Downloads\\csv", "201503hourly.txt"), StandardCharsets.UTF_8)) {
 
-            List<String> result = Files.lines(FileSystems.getDefault().getPath("C:\\Users\\philipp\\Downloads\\csv", "201503hourly.txt"), StandardCharsets.UTF_8)
-                    .collect(Collectors.toList()); // turn it into a List!
+                List<String> result = stream
+                        .collect(Collectors.toList()); // turn it into a List!
 
+                // Make sure we got the correct amount of lines in the file:
+                Assert.assertEquals(4496263, result.size());
 
-            Instant end = Instant.now();
-
-            System.out.println(Duration.between(start, end));
-        } catch(Exception e) {
-
-        }
+            } catch(IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     @Test
@@ -95,14 +98,40 @@ public class IntegrationTest {
         // Construct the parser:
         CsvParser<LocalWeatherData> parser = new CsvParser<>(options, mapping);
         // Measure the Time using the MeasurementUtils:
-        MeasurementUtils.MeasureElapsedTime("LocalWeatherData_Sequential", () -> {
+        MeasurementUtils.MeasureElapsedTime("LocalWeatherData_Sequential_Parse", () -> {
             // Read the file:
-            List<CsvMappingResult<LocalWeatherData>> result =  parser.ReadFromFile(FileSystems.getDefault().getPath("C:\\Users\\philipp\\Downloads\\csv", "201503hourly.txt"), StandardCharsets.UTF_8)
-                    .filter(e -> e.isValid())
-                    .collect(Collectors.toList()); // turn it into a List!
+            try(Stream<CsvMappingResult<LocalWeatherData>> stream = parser.ReadFromFile(FileSystems.getDefault().getPath("C:\\Users\\philipp\\Downloads\\csv", "201503hourly.txt"), StandardCharsets.UTF_8)) {
 
-            // Make sure we got the correct amount of lines in the file:
-            Assert.assertEquals(4496262, result.size());
+                    List<CsvMappingResult<LocalWeatherData>> result = stream
+                            .filter(e -> e.isValid())
+                            .collect(Collectors.toList()); // turn it into a List!
+
+                Assert.assertEquals(4496262, result.size());
+            }
+        });
+    }
+
+    @Test
+    public void testReadFromFile_LocalWeatherData_Parallel() {
+
+        // Not in parallel:
+        CsvParserOptions options = new CsvParserOptions(true, ",", true);
+        // The Mapping to employ:
+        LocalWeatherDataMapper mapping = new LocalWeatherDataMapper(() -> new LocalWeatherData());
+        // Construct the parser:
+        CsvParser<LocalWeatherData> parser = new CsvParser<>(options, mapping);
+        // Measure the Time using the MeasurementUtils:
+        MeasurementUtils.MeasureElapsedTime("LocalWeatherData_Parallel_Parse", () -> {
+
+            try(Stream<CsvMappingResult<LocalWeatherData>> stream = parser.ReadFromFile(FileSystems.getDefault().getPath("C:\\Users\\philipp\\Downloads\\csv", "201503hourly.txt"), StandardCharsets.UTF_8)) {
+
+                List<CsvMappingResult<LocalWeatherData>> result = stream
+                        .filter(e -> e.isValid())
+                        .collect(Collectors.toList()); // turn it into a List!
+
+                Assert.assertEquals(4496262, result.size());
+
+            }
         });
     }
 }
