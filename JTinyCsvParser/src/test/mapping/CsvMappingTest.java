@@ -25,7 +25,7 @@ public class CsvMappingTest {
         public SampleEntityMapping(IObjectCreator<SampleEntity> creator) {
             super(creator);
 
-            MapProperty(0, Integer.TYPE, SampleEntity::setX);
+            MapProperty(0, Integer.class, SampleEntity::setX);
         }
     }
 
