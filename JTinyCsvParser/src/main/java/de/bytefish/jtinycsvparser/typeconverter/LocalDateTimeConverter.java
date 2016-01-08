@@ -6,16 +6,23 @@ package de.bytefish.jtinycsvparser.typeconverter;
 import java.lang.reflect.Type;
 import java.text.NumberFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class LocalDateTimeConverter implements ITypeConverter<LocalDateTime> {
 
-    public LocalDateTimeConverter() {
+    private DateTimeFormatter dateTimeFormatter;
 
+    public LocalDateTimeConverter() {
+        this(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+    }
+
+    public LocalDateTimeConverter(DateTimeFormatter dateTimeFormatter) {
+        this.dateTimeFormatter = dateTimeFormatter;
     }
 
     @Override
     public LocalDateTime convert(String value) {
-        return LocalDateTime.parse(value);
+        return LocalDateTime.parse(value, dateTimeFormatter);
     }
 
     @Override

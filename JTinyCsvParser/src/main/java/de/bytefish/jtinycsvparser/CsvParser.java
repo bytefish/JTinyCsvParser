@@ -28,9 +28,8 @@ public class CsvParser<TEntity> implements ICsvParser<TEntity> {
     @Override
     public Stream<CsvMappingResult<TEntity>> Parse(Stream<String> stream) {
 
-        // Make the stream parallel, if the options are set:
+        // Make the stream parallel, if the option is set:
         if(options.getParallel()) {
-            // With fixed batches.
             stream = stream.parallel();
         }
 

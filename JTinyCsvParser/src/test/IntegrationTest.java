@@ -137,6 +137,6 @@ public class IntegrationTest {
                 Assert.assertEquals(4496262, result.size());
             }
         });
-        
+
     }
 }

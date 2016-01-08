@@ -14,7 +14,7 @@ public class LocalDateConverter implements ITypeConverter<LocalDate> {
     private DateTimeFormatter dateTimeFormatter;
 
     public LocalDateConverter() {
-        this(DateTimeFormatter.ISO_DATE);
+        this(DateTimeFormatter.ISO_LOCAL_DATE);
     }
 
     public LocalDateConverter(DateTimeFormatter dateTimeFormatter) {
