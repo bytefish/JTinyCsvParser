@@ -19,10 +19,18 @@ public class TypeConverterProvider {
 
         typeConverters = new HashMap<>();
 
-        Add(new IntegerConverter(NumberFormat.getNumberInstance()));
-        Add(new StringConverter());
-        Add(new LocalDateTimeConverter());
+        Add(new BigIntegerConverter());
+        Add(new ByteConverter());
+        Add(new DoubleConverter());
+        Add(new DurationConverter());
+        Add(new FloatConverter());
+        Add(new IntegerConverter());
+        Add(new InstantConverter());
         Add(new LocalDateConverter());
+        Add(new LocalDateTimeConverter());
+        Add(new LongConverter());
+        Add(new ShortConverter());
+        Add(new StringConverter());
     }
 
     public <TTargetType> TypeConverterProvider Add(ITypeConverter<TTargetType> typeConverter) {

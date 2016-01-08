@@ -5,24 +5,19 @@ package de.bytefish.jtinycsvparser.typeconverter;
 
 import java.lang.reflect.Type;
 import java.text.NumberFormat;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.Locale;
 
-public class IntegerConverter implements ITypeConverter<Integer> {
+public class DurationConverter implements ITypeConverter<Duration> {
 
-    private NumberFormat numberFormat;
-
-    public IntegerConverter() {
-        this(NumberFormat.getInstance(Locale.US));
-    }
-
-    public IntegerConverter(NumberFormat numberFormat) {
-        this.numberFormat = numberFormat;
+    public DurationConverter() {
     }
 
     @Override
-    public Integer convert(String value) {
+    public Duration convert(String value) {
         try {
-            return numberFormat.parse(value).intValue();
+            return Duration.parse(value);
         } catch(Exception e) {
             throw new RuntimeException(e);
         }
@@ -30,6 +25,6 @@ public class IntegerConverter implements ITypeConverter<Integer> {
 
     @Override
     public Type getTargetType() {
-        return Integer.class;
+        return Duration.class;
     }
 }

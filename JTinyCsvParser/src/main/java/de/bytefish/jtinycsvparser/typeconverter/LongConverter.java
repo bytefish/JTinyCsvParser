@@ -7,22 +7,22 @@ import java.lang.reflect.Type;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-public class IntegerConverter implements ITypeConverter<Integer> {
+public class LongConverter implements ITypeConverter<Long> {
 
     private NumberFormat numberFormat;
 
-    public IntegerConverter() {
+    public LongConverter() {
         this(NumberFormat.getInstance(Locale.US));
     }
 
-    public IntegerConverter(NumberFormat numberFormat) {
+    public LongConverter(NumberFormat numberFormat) {
         this.numberFormat = numberFormat;
     }
 
     @Override
-    public Integer convert(String value) {
+    public Long convert(String value) {
         try {
-            return numberFormat.parse(value).intValue();
+            return numberFormat.parse(value).longValue();
         } catch(Exception e) {
             throw new RuntimeException(e);
         }
@@ -30,6 +30,6 @@ public class IntegerConverter implements ITypeConverter<Integer> {
 
     @Override
     public Type getTargetType() {
-        return Integer.class;
+        return Long.class;
     }
 }

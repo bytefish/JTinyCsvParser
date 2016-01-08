@@ -7,22 +7,22 @@ import java.lang.reflect.Type;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-public class IntegerConverter implements ITypeConverter<Integer> {
+public class FloatConverter implements ITypeConverter<Float> {
 
     private NumberFormat numberFormat;
 
-    public IntegerConverter() {
+    public FloatConverter() {
         this(NumberFormat.getInstance(Locale.US));
     }
 
-    public IntegerConverter(NumberFormat numberFormat) {
+    public FloatConverter(NumberFormat numberFormat) {
         this.numberFormat = numberFormat;
     }
 
     @Override
-    public Integer convert(String value) {
+    public Float convert(String value) {
         try {
-            return numberFormat.parse(value).intValue();
+            return numberFormat.parse(value).floatValue();
         } catch(Exception e) {
             throw new RuntimeException(e);
         }
@@ -30,6 +30,6 @@ public class IntegerConverter implements ITypeConverter<Integer> {
 
     @Override
     public Type getTargetType() {
-        return Integer.class;
+        return Float.class;
     }
 }
