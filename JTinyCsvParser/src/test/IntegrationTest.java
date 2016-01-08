@@ -74,6 +74,8 @@ public class IntegrationTest {
     public void testReadFromFile_SequentialRead() {
 
         MeasurementUtils.MeasureElapsedTime("LocalWeatherData_SequentialRead", () -> {
+
+            // Read the file. Make sure to wrap it in a try, so the file handle gets disposed properly:
             try(Stream<String> stream = Files.lines(FileSystems.getDefault().getPath("C:\\Users\\philipp\\Downloads\\csv", "201503hourly.txt"), StandardCharsets.UTF_8)) {
 
                 List<String> result = stream
@@ -99,7 +101,8 @@ public class IntegrationTest {
         CsvParser<LocalWeatherData> parser = new CsvParser<>(options, mapping);
         // Measure the Time using the MeasurementUtils:
         MeasurementUtils.MeasureElapsedTime("LocalWeatherData_Sequential_Parse", () -> {
-            // Read the file:
+
+            // Read the file. Make sure to wrap it in a try, so the file handle gets disposed properly:
             try(Stream<CsvMappingResult<LocalWeatherData>> stream = parser.ReadFromFile(FileSystems.getDefault().getPath("C:\\Users\\philipp\\Downloads\\csv", "201503hourly.txt"), StandardCharsets.UTF_8)) {
 
                     List<CsvMappingResult<LocalWeatherData>> result = stream
@@ -123,6 +126,7 @@ public class IntegrationTest {
         // Measure the Time using the MeasurementUtils:
         MeasurementUtils.MeasureElapsedTime("LocalWeatherData_Parallel_Parse", () -> {
 
+            // Read the file. Make sure to wrap it in a try, so the file handle gets disposed properly:
             try(Stream<CsvMappingResult<LocalWeatherData>> stream = parser.ReadFromFile(FileSystems.getDefault().getPath("C:\\Users\\philipp\\Downloads\\csv", "201503hourly.txt"), StandardCharsets.UTF_8)) {
 
                 List<CsvMappingResult<LocalWeatherData>> result = stream
