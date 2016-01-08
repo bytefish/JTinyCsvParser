@@ -7,6 +7,7 @@ import de.bytefish.jtinycsvparser.mapping.CsvMapping;
 import de.bytefish.jtinycsvparser.mapping.CsvMappingResult;
 import de.bytefish.jtinycsvparser.utils.StringUtils;
 
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -45,9 +46,9 @@ public class CsvParser<TEntity> implements ICsvParser<TEntity> {
     }
 
     public Stream<CsvMappingResult<TEntity>> ReadFromFile(Path path, Charset charset) {
-        try {
-            return Parse(Files.lines(path, charset));
-        } catch(Exception e) {
+        try(Stream<String> stream = Files.lines(path, charset)) {
+            return Parse(stream);
+        } catch(IOException e) {
             throw new RuntimeException(e);
         }
     }

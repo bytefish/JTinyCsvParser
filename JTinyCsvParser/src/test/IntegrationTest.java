@@ -72,7 +72,6 @@ public class IntegrationTest {
     public void testReadFromFile_SequentialRead() {
 
         try {
-            Instant start = Instant.now();
 
             List<String> result = Files.lines(FileSystems.getDefault().getPath("C:\\Users\\philipp\\Downloads\\csv", "201503hourly.txt"), StandardCharsets.UTF_8)
                     .collect(Collectors.toList()); // turn it into a List!

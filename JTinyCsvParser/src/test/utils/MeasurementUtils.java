@@ -23,6 +23,7 @@ public class MeasurementUtils {
 
     public static void MeasureElapsedTime(String description, Action action) {
         Duration duration = MeasureElapsedTime(action);
+
         System.out.println(String.format("[%s] %s", description, duration));
     }
 
