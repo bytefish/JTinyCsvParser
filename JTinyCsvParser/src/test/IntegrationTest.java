@@ -5,18 +5,22 @@ import de.bytefish.jtinycsvparser.builder.IObjectCreator;
 import de.bytefish.jtinycsvparser.mapping.CsvMapping;
 import de.bytefish.jtinycsvparser.mapping.CsvMappingResult;
 import de.bytefish.jtinycsvparser.typeconverter.LocalDateConverter;
-import junit.framework.Assert;
+import de.bytefish.jtinycsvparser.utils.MeasurementUtils;
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Ignore("Integration Test")
+@Ignore("Integration Test to evaluate the Performance")
 public class IntegrationTest {
 
     public class LocalWeatherData
@@ -65,21 +69,41 @@ public class IntegrationTest {
     }
 
     @Test
-    public void testReadFromFile_LocalWeatherData() {
+    public void testReadFromFile_SequentialRead() {
+
+        try {
+            Instant start = Instant.now();
+
+            List<String> result = Files.lines(FileSystems.getDefault().getPath("C:\\Users\\philipp\\Downloads\\csv", "201503hourly.txt"), StandardCharsets.UTF_8)
+                    .collect(Collectors.toList()); // turn it into a List!
+
+
+            Instant end = Instant.now();
+
+            System.out.println(Duration.between(start, end));
+        } catch(Exception e) {
+
+        }
+    }
+
+    @Test
+    public void testReadFromFile_LocalWeatherData_Sequential() {
 
         // Not in parallel:
-        CsvParserOptions options = new CsvParserOptions(true, ",", true);
+        CsvParserOptions options = new CsvParserOptions(true, ",", false);
         // The Mapping to employ:
         LocalWeatherDataMapper mapping = new LocalWeatherDataMapper(() -> new LocalWeatherData());
         // Construct the parser:
         CsvParser<LocalWeatherData> parser = new CsvParser<>(options, mapping);
+        // Measure the Time using the MeasurementUtils:
+        MeasurementUtils.MeasureElapsedTime("LocalWeatherData_Sequential", () -> {
+            // Read the file:
+            List<CsvMappingResult<LocalWeatherData>> result =  parser.ReadFromFile(FileSystems.getDefault().getPath("C:\\Users\\philipp\\Downloads\\csv", "201503hourly.txt"), StandardCharsets.UTF_8)
+                    .filter(e -> e.isValid())
+                    .collect(Collectors.toList()); // turn it into a List!
 
-        // Read the file:
-        List<CsvMappingResult<LocalWeatherData>> result =  parser.ReadFromFile(FileSystems.getDefault().getPath("C:\\Users\\philipp\\Downloads\\csv", "201503hourly.txt"), StandardCharsets.UTF_8)
-                .filter(e -> e.isValid())
-                .collect(Collectors.toList()); // turn it into a List!
-
-        // 4496262 Entries should be valid:
-        Assert.assertEquals(4496262, result.size());
+            // Make sure we got the correct amount of lines in the file:
+            Assert.assertEquals(4496262, result.size());
+        });
     }
 }

@@ -1,3 +1,6 @@
+// Copyright (c) Philipp Wagner. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 package de.bytefish.jtinycsvparser.utils;
 
 import org.junit.Assert;
@@ -5,9 +8,6 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by philipp on 1/7/2016.
- */
 public class StringUtilsTest {
 
     @Test
