@@ -19,6 +19,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Spliterator;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -134,8 +135,8 @@ public class IntegrationTest {
                         .collect(Collectors.toList()); // turn it into a List!
 
                 Assert.assertEquals(4496262, result.size());
-
             }
         });
+        
     }
 }

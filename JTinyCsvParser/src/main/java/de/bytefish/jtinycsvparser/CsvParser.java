@@ -3,13 +3,15 @@
 
 package de.bytefish.jtinycsvparser;
 
+import de.bytefish.jtinycsvparser.iterators.CustomFiles;
 import de.bytefish.jtinycsvparser.mapping.CsvMapping;
 import de.bytefish.jtinycsvparser.mapping.CsvMappingResult;
 import de.bytefish.jtinycsvparser.utils.StringUtils;
 
+
+
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.stream.Stream;
@@ -30,6 +32,7 @@ public class CsvParser<TEntity> implements ICsvParser<TEntity> {
 
         // Make the stream parallel, if the options are set:
         if(options.getParallel()) {
+            // With fixed batches.
             stream = stream.parallel();
         }
 
@@ -47,7 +50,7 @@ public class CsvParser<TEntity> implements ICsvParser<TEntity> {
 
     public Stream<CsvMappingResult<TEntity>> ReadFromFile(Path path, Charset charset) {
         try {
-            return Parse(Files.lines(path, charset));
+            return Parse(CustomFiles.lines(path, charset));
         } catch(IOException e) {
             throw new RuntimeException(e);
         }
