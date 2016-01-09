@@ -28,4 +28,12 @@ public class CsvMappingResult<TEntity> {
     public CsvMappingError getError() {
         return error;
     }
+
+    @Override
+    public String toString() {
+        return "CsvMappingResult{" +
+                "result=" + result +
+                ", error=" + error +
+                '}';
+    }
 }

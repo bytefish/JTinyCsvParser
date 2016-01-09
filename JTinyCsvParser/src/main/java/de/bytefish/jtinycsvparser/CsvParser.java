@@ -56,4 +56,12 @@ public class CsvParser<TEntity> implements ICsvParser<TEntity> {
     public Stream<CsvMappingResult<TEntity>> ReadFromString(String csvData, CsvReaderOptions options) {
         return Parse(Arrays.asList(csvData.split(options.getNewLine())));
     }
+
+    @Override
+    public String toString() {
+        return "CsvParser{" +
+                "options=" + options +
+                ", mapping=" + mapping +
+                '}';
+    }
 }

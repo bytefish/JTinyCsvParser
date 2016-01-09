@@ -30,4 +30,11 @@ public class LocalDateConverter implements ITypeConverter<LocalDate> {
     public Type getTargetType() {
         return LocalDate.class;
     }
+
+    @Override
+    public String toString() {
+        return "LocalDateConverter{" +
+                "dateTimeFormatter=" + dateTimeFormatter +
+                '}';
+    }
 }

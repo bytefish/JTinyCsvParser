@@ -4,12 +4,14 @@
 package de.bytefish.jtinycsvparser.mapping;
 
 import de.bytefish.jtinycsvparser.builder.IObjectCreator;
+import de.bytefish.jtinycsvparser.exceptions.DuplicateColumnMappingException;
 import de.bytefish.jtinycsvparser.typeconverter.ITypeConverter;
 import de.bytefish.jtinycsvparser.typeconverter.TypeConverterProvider;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.function.BiConsumer;
+import java.util.stream.Collectors;
 
 public abstract class CsvMapping<TEntity> {
 
@@ -31,6 +33,14 @@ public abstract class CsvMapping<TEntity> {
         public ICsvPropertyMapping<TEntity> getPropertyMapping() {
             return mapping;
         }
+
+        @Override
+        public String toString() {
+            return "IndexToPropertyMapping{" +
+                    "index=" + index +
+                    ", mapping=" + mapping +
+                    '}';
+        }
     }
 
     private IObjectCreator creator;
@@ -44,12 +54,15 @@ public abstract class CsvMapping<TEntity> {
     }
 
     public <TProperty> void MapProperty(int columnIndex, Type targetType, BiConsumer<TEntity, TProperty> setter) {
-       ITypeConverter<TProperty> converter = typeConverterProvider.Resolve(targetType);
+        ITypeConverter<TProperty> converter = typeConverterProvider.Resolve(targetType);
 
         MapProperty(columnIndex, targetType, setter, converter);
     }
 
     public <TProperty> void MapProperty(int columnIndex, Type targetType, BiConsumer<TEntity, TProperty> setter, ITypeConverter<TProperty> converter) {
+        if(csvPropertyMappings.stream().anyMatch(e -> e.getColumnIndex() == columnIndex)) {
+            throw new DuplicateColumnMappingException("Duplicate Mapping for Column " + columnIndex);
+        }
         csvPropertyMappings.add(new IndexToPropertyMapping(columnIndex, new CsvPropertyMapping(setter, converter)));
     }
 
@@ -57,25 +70,44 @@ public abstract class CsvMapping<TEntity> {
 
         TEntity entity = (TEntity) creator.create();
 
-        for (int pos = 0; pos < csvPropertyMappings.size(); pos++)
-        {
+        // Iterate over all registered mappings:
+        for (int pos = 0; pos < csvPropertyMappings.size(); pos++) {
+
+            // Get the registered mapping:
             IndexToPropertyMapping indexToPropertyMapping = csvPropertyMappings.get(pos);
 
+            // Get the column index for this property mapping:
             int columnIndex = indexToPropertyMapping.getColumnIndex();
 
-            if (columnIndex >= values.length)
-            {
+            // Throw an error, if the current line doesn't have enough columns for the mapping:
+            if (columnIndex >= values.length) {
                 return new CsvMappingResult(new CsvMappingError(columnIndex, String.format("Column %s Out Of Range", columnIndex), null));
             }
 
+            // Get the Value of the Column:
             String value = values[columnIndex];
 
-            if (!indexToPropertyMapping.getPropertyMapping().tryMapValue(entity, value))
-            {
-                return new CsvMappingResult(new CsvMappingError(columnIndex,value, "Conversion failed"));
+            // And finally try to map the value to the entity (honestly it is magical using the BiConsumer!):
+            if (!indexToPropertyMapping.getPropertyMapping().tryMapValue(entity, value)) {
+                return new CsvMappingResult(new CsvMappingError(columnIndex, value, "Conversion failed"));
             }
         }
 
         return new CsvMappingResult(entity);
+    }
+
+    @Override
+    public String toString() {
+
+        String csvPropertyMappingsString = csvPropertyMappings
+                .stream()
+                .map(e -> e.toString())
+                .collect(Collectors.joining(", "));
+
+        return "CsvMapping{" +
+                "creator=" + creator +
+                ", typeConverterProvider=" + typeConverterProvider +
+                ", csvPropertyMappings=[" + csvPropertyMappingsString + "]" +
+                '}';
     }
 }

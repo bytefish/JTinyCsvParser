@@ -32,4 +32,11 @@ public class LongConverter implements ITypeConverter<Long> {
     public Type getTargetType() {
         return Long.class;
     }
+
+    @Override
+    public String toString() {
+        return "LongConverter{" +
+                "numberFormat=" + numberFormat +
+                '}';
+    }
 }

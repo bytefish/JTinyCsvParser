@@ -31,4 +31,12 @@ public class StringSplitTokenizer implements ITokenizer {
         }
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "StringSplitTokenizer{" +
+                "columnDelimiter='" + columnDelimiter + '\'' +
+                ", trimValues=" + trimValues +
+                '}';
+    }
 }

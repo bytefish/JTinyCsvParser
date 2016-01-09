@@ -27,4 +27,9 @@ public class InstantConverter implements ITypeConverter<Instant> {
     public Type getTargetType() {
         return Instant.class;
     }
+
+    @Override
+    public String toString() {
+        return "InstantConverter{}";
+    }
 }

@@ -29,4 +29,11 @@ public class LocalDateTimeConverter implements ITypeConverter<LocalDateTime> {
     public Type getTargetType() {
         return LocalDateTime.class;
     }
+
+    @Override
+    public String toString() {
+        return "LocalDateTimeConverter{" +
+                "dateTimeFormatter=" + dateTimeFormatter +
+                '}';
+    }
 }

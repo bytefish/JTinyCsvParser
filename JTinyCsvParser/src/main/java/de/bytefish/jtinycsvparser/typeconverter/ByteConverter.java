@@ -32,4 +32,11 @@ public class ByteConverter implements ITypeConverter<Byte> {
     public Type getTargetType() {
         return Byte.class;
     }
+
+    @Override
+    public String toString() {
+        return "ByteConverter{" +
+                "numberFormat=" + numberFormat +
+                '}';
+    }
 }

@@ -32,4 +32,11 @@ public class ShortConverter implements ITypeConverter<Short> {
     public Type getTargetType() {
         return Short.class;
     }
+
+    @Override
+    public String toString() {
+        return "ShortConverter{" +
+                "numberFormat=" + numberFormat +
+                '}';
+    }
 }

@@ -27,4 +27,9 @@ public class DurationConverter implements ITypeConverter<Duration> {
     public Type getTargetType() {
         return Duration.class;
     }
+
+    @Override
+    public String toString() {
+        return "DurationConverter{}";
+    }
 }

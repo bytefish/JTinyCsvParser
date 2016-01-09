@@ -27,4 +27,9 @@ public class BigIntegerConverter implements ITypeConverter<BigInteger> {
     public Type getTargetType() {
         return BigInteger.class;
     }
+
+    @Override
+    public String toString() {
+        return "BigIntegerConverter{}";
+    }
 }

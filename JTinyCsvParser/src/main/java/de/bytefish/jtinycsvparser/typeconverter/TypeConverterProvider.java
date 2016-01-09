@@ -8,8 +8,11 @@ import de.bytefish.jtinycsvparser.exceptions.TypeConverterNotRegisteredException
 
 import java.lang.reflect.Type;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class TypeConverterProvider {
 
@@ -52,4 +55,17 @@ public class TypeConverterProvider {
         return (ITypeConverter<TTargetType>) typeConverters.get(targetType);
     }
 
+    @Override
+    public String toString() {
+
+        String typeConvertersString =
+                typeConverters.entrySet()
+                        .stream()
+                        .map(e -> e.getValue().toString())
+                        .collect(Collectors.joining(", "));
+
+        return "TypeConverterProvider{" +
+                "typeConverters=[" + typeConvertersString + "]" +
+                '}';
+    }
 }

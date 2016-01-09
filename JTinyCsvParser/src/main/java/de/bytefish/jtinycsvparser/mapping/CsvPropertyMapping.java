@@ -26,4 +26,12 @@ public class CsvPropertyMapping<TEntity, TProperty> implements ICsvPropertyMappi
             return false;
         }
     }
+
+    @Override
+    public String toString() {
+        return "CsvPropertyMapping{" +
+                "setter=" + setter +
+                ", typeConverter=" + typeConverter +
+                '}';
+    }
 }

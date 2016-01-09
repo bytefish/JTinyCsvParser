@@ -32,4 +32,11 @@ public class DoubleConverter implements ITypeConverter<Double> {
     public Type getTargetType() {
         return Double.class;
     }
+
+    @Override
+    public String toString() {
+        return "DoubleConverter{" +
+                "numberFormat=" + numberFormat +
+                '}';
+    }
 }

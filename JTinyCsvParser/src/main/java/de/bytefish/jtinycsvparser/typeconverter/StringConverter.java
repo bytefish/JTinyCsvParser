@@ -21,4 +21,9 @@ public class StringConverter implements ITypeConverter<String> {
     public Type getTargetType() {
         return String.class;
     }
+
+    @Override
+    public String toString() {
+        return "StringConverter{}";
+    }
 }

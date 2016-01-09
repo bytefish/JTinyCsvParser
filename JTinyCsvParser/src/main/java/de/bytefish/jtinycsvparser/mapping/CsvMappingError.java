@@ -26,4 +26,13 @@ public class CsvMappingError {
     public String getMessage() {
         return message;
     }
+
+    @Override
+    public String toString() {
+        return "CsvMappingError{" +
+                "index=" + index +
+                ", value='" + value + '\'' +
+                ", message='" + message + '\'' +
+                '}';
+    }
 }

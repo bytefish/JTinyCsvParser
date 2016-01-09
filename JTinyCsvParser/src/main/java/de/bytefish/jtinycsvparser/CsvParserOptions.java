@@ -43,4 +43,13 @@ public class CsvParserOptions {
     public boolean getParallel() {
         return parallel;
     }
+
+    @Override
+    public String toString() {
+        return "CsvParserOptions{" +
+                "skipHeader=" + skipHeader +
+                ", parallel=" + parallel +
+                ", tokenizer=" + tokenizer +
+                '}';
+    }
 }

@@ -32,4 +32,11 @@ public class IntegerConverter implements ITypeConverter<Integer> {
     public Type getTargetType() {
         return Integer.class;
     }
+
+    @Override
+    public String toString() {
+        return "IntegerConverter{" +
+                "numberFormat=" + numberFormat +
+                '}';
+    }
 }

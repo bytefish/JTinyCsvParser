@@ -32,4 +32,11 @@ public class FloatConverter implements ITypeConverter<Float> {
     public Type getTargetType() {
         return Float.class;
     }
+
+    @Override
+    public String toString() {
+        return "FloatConverter{" +
+                "numberFormat=" + numberFormat +
+                '}';
+    }
 }
