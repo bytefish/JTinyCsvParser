@@ -6,19 +6,17 @@ package de.bytefish.jtinycsvparser.typeconverter;
 import org.junit.Assert;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
-public class IntegerConverterTest {
+public class FloatConverterTest {
 
     @Test
     public void testConvert() throws Exception {
-        int val = new IntegerConverter().convert("1");
 
-        Assert.assertEquals(1, val);
+        Float val = new FloatConverter().convert("2.00001");
+        Assert.assertEquals(2.00001, val, 1e-5);
     }
 
     @Test
     public void testGetTargetType() throws Exception {
-        Assert.assertEquals(Integer.class, new IntegerConverter().getTargetType());
+        Assert.assertEquals(Float.class, new FloatConverter().getTargetType());
     }
 }
