@@ -4,7 +4,10 @@
 package de.bytefish.jtinycsvparser.mapping;
 
 import de.bytefish.jtinycsvparser.builder.IObjectCreator;
-import junit.framework.Assert;
+import de.bytefish.jtinycsvparser.exceptions.DuplicateColumnMappingException;
+import de.bytefish.jtinycsvparser.utils.JUnitUtils;
+import org.junit.Assert;
+
 
 public class CsvMappingTest {
 
@@ -29,6 +32,16 @@ public class CsvMappingTest {
         }
     }
 
+    public class InvalidSampleEntityMapping extends CsvMapping<SampleEntity> {
+        public InvalidSampleEntityMapping(IObjectCreator<SampleEntity> creator) {
+            super(creator);
+
+            MapProperty(0, Integer.class, SampleEntity::setX);
+            MapProperty(0, Integer.class, SampleEntity::setX);
+        }
+    }
+
+
     @org.junit.Test
     public void testMapProperty() throws Exception {
         // The ObjectCreator used to instantiate a new Object:
@@ -41,5 +54,12 @@ public class CsvMappingTest {
         Assert.assertEquals(null, result.getError());
         // And the Property A should be 1:
         Assert.assertEquals(1, result.getResult().A);
+    }
+
+    @org.junit.Test
+    public void testMapProperty_DuplicateMapping_Throws() {
+        IObjectCreator<SampleEntity> objectCreator = () -> new SampleEntity();
+
+        JUnitUtils.assertThrows(() -> new InvalidSampleEntityMapping(objectCreator), DuplicateColumnMappingException.class);
     }
 }
