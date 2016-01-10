@@ -3,6 +3,8 @@
 
 package de.bytefish.jtinycsvparser.tokenizer;
 
+import de.bytefish.jtinycsvparser.utils.StringUtils;
+
 import java.util.Arrays;
 
 public class StringSplitTokenizer implements ITokenizer {
@@ -19,15 +21,7 @@ public class StringSplitTokenizer implements ITokenizer {
     public String[] tokenize(String input) {
         String[] result = input.split(columnDelimiter);
         if(trimValues) {
-            result = trimAllElements(result);
-        }
-        return result;
-    }
-
-    private String[] trimAllElements(String[] elements) {
-        String[] result = new String[elements.length];
-        for(int pos = 0; pos < elements.length; pos++) {
-            result[pos] = elements[pos].trim();
+            result = StringUtils.trimAllElements(result);
         }
         return result;
     }
