@@ -81,7 +81,7 @@ public abstract class CsvMapping<TEntity> {
 
             // Throw an error, if the current line doesn't have enough columns for the mapping:
             if (columnIndex >= values.length) {
-                return new CsvMappingResult(new CsvMappingError(columnIndex, String.format("Column %s Out Of Range", columnIndex), null));
+                return new CsvMappingResult(new CsvMappingError(columnIndex, null, String.format("Column %s Out Of Range", columnIndex)));
             }
 
             // Get the Value of the Column:

@@ -9,6 +9,6 @@ import java.util.stream.Stream;
 
 public interface ICsvParser<TEntity> {
 
-    Stream<CsvMappingResult<TEntity>> Parse(Stream<String> csvData);
+    Stream<CsvMappingResult<TEntity>> parse(Stream<String> csvData);
 
 }

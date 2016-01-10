@@ -3,6 +3,7 @@
 
 package de.bytefish.jtinycsvparser.tokenizer;
 
+import de.bytefish.jtinycsvparser.utils.JUnitUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -32,5 +33,11 @@ public class StringSplitTokenizerTest {
         Assert.assertEquals(" Value0", result[0]);
         Assert.assertEquals("Value1 ", result[1]);
         Assert.assertEquals("Value2 ", result[2]);
+    }
+
+
+    @Test
+    public void testStringSplitTokenizer_ToString() {
+        JUnitUtils.assertDoesNotThrow(() -> new StringSplitTokenizer(",", false).toString());
     }
 }

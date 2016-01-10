@@ -3,6 +3,7 @@
 
 package de.bytefish.jtinycsvparser.tokenizer;
 
+import de.bytefish.jtinycsvparser.utils.JUnitUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -30,6 +31,11 @@ public class QuotedStringTokenizerTest {
         Assert.assertEquals(2, result.length);
         Assert.assertEquals(" Value0,Value1 ", result[0]);
         Assert.assertEquals(" Value2", result[1]);
+    }
+
+    @Test
+    public void testQuotedStringTokenizer_ToString() {
+        JUnitUtils.assertDoesNotThrow(() -> new QuotedStringTokenizer(",", false).toString());
     }
 
 }

@@ -26,7 +26,7 @@ public class CsvParser<TEntity> implements ICsvParser<TEntity> {
     }
 
     @Override
-    public Stream<CsvMappingResult<TEntity>> Parse(Stream<String> stream) {
+    public Stream<CsvMappingResult<TEntity>> parse(Stream<String> stream) {
 
         // Make the stream parallel, if the option is set:
         if(options.getParallel()) {
@@ -41,20 +41,20 @@ public class CsvParser<TEntity> implements ICsvParser<TEntity> {
                 .map(a -> mapping.Map(a)); // MapProperty the Result to the strongly-typed object
     }
 
-    public Stream<CsvMappingResult<TEntity>> Parse(Iterable<String> csvData) {
-        return Parse(StreamSupport.stream(csvData.spliterator(), false));
+    public Stream<CsvMappingResult<TEntity>> parse(Iterable<String> csvData) {
+        return parse(StreamSupport.stream(csvData.spliterator(), false));
     }
 
-    public Stream<CsvMappingResult<TEntity>> ReadFromFile(Path path, Charset charset) {
+    public Stream<CsvMappingResult<TEntity>> readFromFile(Path path, Charset charset) {
         try {
-            return Parse(Files.lines(path, charset));
+            return parse(Files.lines(path, charset));
         } catch(IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public Stream<CsvMappingResult<TEntity>> ReadFromString(String csvData, CsvReaderOptions options) {
-        return Parse(Arrays.asList(csvData.split(options.getNewLine())));
+    public Stream<CsvMappingResult<TEntity>> readFromString(String csvData, CsvReaderOptions options) {
+        return parse(Arrays.asList(csvData.split(options.getNewLine())));
     }
 
     @Override

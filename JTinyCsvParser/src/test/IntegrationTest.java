@@ -14,12 +14,9 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
-import java.time.Duration;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Spliterator;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -104,7 +101,7 @@ public class IntegrationTest {
         MeasurementUtils.MeasureElapsedTime("LocalWeatherData_Sequential_Parse", () -> {
 
             // Read the file. Make sure to wrap it in a try, so the file handle gets disposed properly:
-            try(Stream<CsvMappingResult<LocalWeatherData>> stream = parser.ReadFromFile(FileSystems.getDefault().getPath("C:\\Users\\philipp\\Downloads\\csv", "201503hourly.txt"), StandardCharsets.UTF_8)) {
+            try(Stream<CsvMappingResult<LocalWeatherData>> stream = parser.readFromFile(FileSystems.getDefault().getPath("C:\\Users\\philipp\\Downloads\\csv", "201503hourly.txt"), StandardCharsets.UTF_8)) {
 
                     List<CsvMappingResult<LocalWeatherData>> result = stream
                             .filter(e -> e.isValid())
@@ -128,7 +125,7 @@ public class IntegrationTest {
         MeasurementUtils.MeasureElapsedTime("LocalWeatherData_Parallel_Parse", () -> {
 
             // Read the file. Make sure to wrap it in a try, so the file handle gets disposed properly:
-            try(Stream<CsvMappingResult<LocalWeatherData>> stream = parser.ReadFromFile(FileSystems.getDefault().getPath("C:\\Users\\philipp\\Downloads\\csv", "201503hourly.txt"), StandardCharsets.UTF_8)) {
+            try(Stream<CsvMappingResult<LocalWeatherData>> stream = parser.readFromFile(FileSystems.getDefault().getPath("C:\\Users\\philipp\\Downloads\\csv", "201503hourly.txt"), StandardCharsets.UTF_8)) {
 
                 List<CsvMappingResult<LocalWeatherData>> result = stream
                         .filter(e -> e.isValid())

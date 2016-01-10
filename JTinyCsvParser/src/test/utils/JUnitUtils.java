@@ -37,4 +37,16 @@ public class JUnitUtils {
         Assert.assertTrue(hasThrown);
         Assert.assertEquals(expectedType, actualType);
     }
+
+    public static void assertDoesNotThrow(Action action) {
+        boolean hasThrown = false;
+        Type actualType = null;
+        try {
+            action.invoke();
+        } catch(Exception e) {
+            hasThrown = true;
+            actualType = e.getClass();
+        }
+        Assert.assertFalse(hasThrown);
+    }
 }

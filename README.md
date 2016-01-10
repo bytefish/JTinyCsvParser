@@ -91,7 +91,7 @@ public class CsvParserTest {
         csvData.add(""); // An empty line... Should be skipped.
         csvData.add("Max,Musterman,2000-01-07");
 
-        List<CsvMappingResult<Person>> result =  parser.Parse(csvData)
+        List<CsvMappingResult<Person>> result =  parser.parse(csvData)
                 .collect(Collectors.toList()); // turn it into a List!
 
         Assert.assertNotNull(result);
