@@ -7,14 +7,11 @@ import de.bytefish.jtinycsvparser.exceptions.TypeConverterAlreadyRegisteredExcep
 import de.bytefish.jtinycsvparser.exceptions.TypeConverterNotRegisteredException;
 
 import java.lang.reflect.Type;
-import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-public class TypeConverterProvider {
+public class TypeConverterProvider implements ITypeConverterProvider {
 
     private Map<Type, TypeConverter> typeConverters;
 
@@ -22,21 +19,21 @@ public class TypeConverterProvider {
 
         typeConverters = new HashMap<>();
 
-        Add(new BigIntegerConverter());
-        Add(new ByteConverter());
-        Add(new DoubleConverter());
-        Add(new DurationConverter());
-        Add(new FloatConverter());
-        Add(new IntegerConverter());
-        Add(new InstantConverter());
-        Add(new LocalDateConverter());
-        Add(new LocalDateTimeConverter());
-        Add(new LongConverter());
-        Add(new ShortConverter());
-        Add(new StringConverter());
+        add(new BigIntegerConverter());
+        add(new ByteConverter());
+        add(new DoubleConverter());
+        add(new DurationConverter());
+        add(new FloatConverter());
+        add(new IntegerConverter());
+        add(new InstantConverter());
+        add(new LocalDateConverter());
+        add(new LocalDateTimeConverter());
+        add(new LongConverter());
+        add(new ShortConverter());
+        add(new StringConverter());
     }
 
-    public <TTargetType> TypeConverterProvider Add(ITypeConverter<TTargetType> typeConverter) {
+    public <TTargetType> TypeConverterProvider add(ITypeConverter<TTargetType> typeConverter) {
         Type targetType = typeConverter.getTargetType();
 
         if(typeConverters.containsKey(targetType)) {
@@ -48,11 +45,18 @@ public class TypeConverterProvider {
         return this;
     }
 
-    public <TTargetType> ITypeConverter<TTargetType> Resolve(Type targetType) {
+    public <TTargetType> ITypeConverter<TTargetType> resolve(Type targetType) {
         if(!typeConverters.containsKey(targetType)) {
             throw new TypeConverterNotRegisteredException(String.format("TargetType '%s' has not been registered", targetType));
         }
         return (ITypeConverter<TTargetType>) typeConverters.get(targetType);
+    }
+
+    public <TTargetType> TypeConverterProvider override(ITypeConverter<TTargetType> typeConverter) {
+
+        typeConverters.put(typeConverter.getTargetType(), typeConverter);
+
+        return this;
     }
 
     @Override

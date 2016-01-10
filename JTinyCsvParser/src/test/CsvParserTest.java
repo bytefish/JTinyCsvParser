@@ -12,11 +12,18 @@ import de.bytefish.jtinycsvparser.utils.JUnitUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class CsvParserTest {
 
@@ -65,6 +72,46 @@ public class CsvParserTest {
     @Test
     public void testParse() {
         CsvParserOptions options = new CsvParserOptions(false, ",");
+        PersonMapping mapping = new PersonMapping(() -> new Person());
+
+        CsvParser<Person> parser = new CsvParser<>(options, mapping);
+
+        ArrayList<String> csvData = new ArrayList<>();
+
+        // Simulate CSV Data:
+        csvData.add("Philipp,Wagner,1986-05-12");
+        csvData.add(""); // An empty line... Should be skipped.
+        csvData.add("Max,Musterman,2000-01-07");
+
+        List<CsvMappingResult<Person>> result =  parser.parse(csvData)
+                .collect(Collectors.toList()); // turn it into a List!
+
+        Assert.assertNotNull(result);
+
+        Assert.assertEquals(2, result.size());
+
+        // Get the first person:
+        Person person0 = result.get(0).getResult();
+
+        Assert.assertEquals("Philipp", person0.firstName);
+        Assert.assertEquals("Wagner", person0.lastName);
+        Assert.assertEquals(1986, person0.getBirthDate().getYear());
+        Assert.assertEquals(5, person0.getBirthDate().getMonthValue());
+        Assert.assertEquals(12, person0.getBirthDate().getDayOfMonth());
+
+        // Get the second person:
+        Person person1 = result.get(1).getResult();
+
+        Assert.assertEquals("Max", person1.firstName);
+        Assert.assertEquals("Musterman", person1.lastName);
+        Assert.assertEquals(2000, person1.getBirthDate().getYear());
+        Assert.assertEquals(1, person1.getBirthDate().getMonthValue());
+        Assert.assertEquals(7, person1.getBirthDate().getDayOfMonth());
+    }
+
+    @Test
+    public void testParse_Parallel() {
+        CsvParserOptions options = new CsvParserOptions(false, ",", true);
         PersonMapping mapping = new PersonMapping(() -> new Person());
 
         CsvParser<Person> parser = new CsvParser<>(options, mapping);
@@ -204,18 +251,84 @@ public class CsvParserTest {
         PersonMapping mapping = new PersonMapping(() -> new Person());
 
         CsvParser<Person> parser = new CsvParser<>(options, mapping);
+
+        // Csv Data to parse (written to file...):
+        String lineSeparator = System.getProperty("line.separator");
+        String csvData = "Philipp,Wagner,1986-05-12" + lineSeparator + "Max,Musterman,2000-01-07";
+
         try {
-            File file = File.createTempFile("some-prefix", "some-ext");
-            // Delete after test...
-            file.deleteOnExit();
+            // Create a temporaryFile
+            File temporaryFile = File.createTempFile("readFromFile", "csv");
 
+            temporaryFile.deleteOnExit();
 
+            // Write to file...
+            BufferedWriter writer = new BufferedWriter(new FileWriter(temporaryFile));
+            writer.write(csvData);
+            writer.close();
+
+            List<CsvMappingResult<Person>> result = new ArrayList<>();
+
+            try(Stream<CsvMappingResult<Person>> stream = parser.readFromFile(temporaryFile.toPath(), StandardCharsets.UTF_8))
+            {
+                result = stream.collect(Collectors.toList()); // turn it into a List!
+            }
+
+            Assert.assertNotNull(result);
+
+            Assert.assertEquals(2, result.size());
+
+            // Get the first person:
+            Person person0 = result.get(0).getResult();
+
+            Assert.assertEquals("Philipp", person0.firstName);
+            Assert.assertEquals("Wagner", person0.lastName);
+            Assert.assertEquals(1986, person0.getBirthDate().getYear());
+            Assert.assertEquals(5, person0.getBirthDate().getMonthValue());
+            Assert.assertEquals(12, person0.getBirthDate().getDayOfMonth());
+
+            // Get the second person:
+            Person person1 = result.get(1).getResult();
+
+            Assert.assertEquals("Max", person1.firstName);
+            Assert.assertEquals("Musterman", person1.lastName);
+            Assert.assertEquals(2000, person1.getBirthDate().getYear());
+            Assert.assertEquals(1, person1.getBirthDate().getMonthValue());
+            Assert.assertEquals(7, person1.getBirthDate().getDayOfMonth());
 
         } catch(Exception e) {
-
+            Assert.assertEquals(true, false);
         }
 
         JUnitUtils.assertDoesNotThrow(() -> parser.toString());
+    }
+
+
+    @Test
+    public void testParse_readFromFile_PathNotFound_Throws() {
+        CsvParserOptions options = new CsvParserOptions(false, ",");
+        PersonMapping mapping = new PersonMapping(() -> new Person());
+
+        CsvParser<Person> parser = new CsvParser<>(options, mapping);
+
+        // Csv Data to parse (written to file...):
+        String lineSeparator = System.getProperty("line.separator");
+        String csvData = "Philipp,Wagner,1986-05-12" + lineSeparator + "Max,Musterman,2000-01-07";
+
+        try {
+            List<CsvMappingResult<Person>> result = new ArrayList<>();
+
+            JUnitUtils.assertThrows(() ->
+            {
+                try (Stream<CsvMappingResult<Person>> stream = parser.readFromFile(FileSystems.getDefault().getPath("aaaa", "aaaa.txt"), StandardCharsets.UTF_8)) {
+                    stream.collect(Collectors.toList()); // turn it into a List!
+                }
+            });
+
+        } catch (Exception e) {
+            // Should never get here!
+            Assert.assertEquals(true, false);
+        }
     }
 
 }

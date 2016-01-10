@@ -6,6 +6,7 @@ package de.bytefish.jtinycsvparser.mapping;
 import de.bytefish.jtinycsvparser.builder.IObjectCreator;
 import de.bytefish.jtinycsvparser.exceptions.DuplicateColumnMappingException;
 import de.bytefish.jtinycsvparser.typeconverter.ITypeConverter;
+import de.bytefish.jtinycsvparser.typeconverter.ITypeConverterProvider;
 import de.bytefish.jtinycsvparser.typeconverter.TypeConverterProvider;
 
 import java.lang.reflect.Type;
@@ -44,17 +45,22 @@ public abstract class CsvMapping<TEntity> {
     }
 
     private IObjectCreator creator;
-    private TypeConverterProvider typeConverterProvider;
+    private ITypeConverterProvider typeConverterProvider;
     private ArrayList<IndexToPropertyMapping> csvPropertyMappings;
 
     public CsvMapping(IObjectCreator creator) {
+        this(creator, new TypeConverterProvider());
+    }
+
+    public CsvMapping(IObjectCreator creator, ITypeConverterProvider typeConverterProvider) {
         this.creator = creator;
+        this.typeConverterProvider = typeConverterProvider;
+
         this.csvPropertyMappings = new ArrayList<>();
-        this.typeConverterProvider = new TypeConverterProvider();
     }
 
     public <TProperty> void MapProperty(int columnIndex, Type targetType, BiConsumer<TEntity, TProperty> setter) {
-        ITypeConverter<TProperty> converter = typeConverterProvider.Resolve(targetType);
+        ITypeConverter<TProperty> converter = typeConverterProvider.resolve(targetType);
 
         MapProperty(columnIndex, targetType, setter, converter);
     }
