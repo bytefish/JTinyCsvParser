@@ -3,12 +3,9 @@
 
 package de.bytefish.jtinycsvparser.tokenizer;
 
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 import de.bytefish.jtinycsvparser.utils.StringUtils;
-import sun.awt.image.BufferedImageDevice;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
