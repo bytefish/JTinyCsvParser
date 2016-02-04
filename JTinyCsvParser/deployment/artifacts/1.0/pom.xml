@@ -13,7 +13,7 @@
     <name>jtinycsvparser</name>
     <description>JTinyCsvParser is a high-performance CSV Parser for Java 1.8.</description>
     <url>http://www.github.com/bytefish/JTinyCsvParser</url>
-
+    
     <!-- Define the License -->
     <licenses>
         <license>
@@ -26,6 +26,7 @@
         <connection>scm:git:git://github.com/bytefish/JTinyCsvParser.git</connection>
         <developerConnection>scm:git:git@github.com:bytefish/JTinyCsvParser.git</developerConnection>
     </scm>
+    
     <!-- Developers -->
     <developers>
         <developer>
