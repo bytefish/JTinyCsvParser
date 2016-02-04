@@ -3,6 +3,7 @@
 .idea/workspace.xml
 .idea/libraries
 .DS_Store
+*.asc
 /out/production
 /out/test
 /captures
