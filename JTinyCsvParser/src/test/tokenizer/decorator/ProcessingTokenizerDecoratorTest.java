@@ -12,7 +12,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PostProcessingTokenizerDecoratorTest {
+public class ProcessingTokenizerDecoratorTest {
 
     @Test
     public void testFixedLengthTokenizer_TokenizeLine() {
@@ -24,14 +24,19 @@ public class PostProcessingTokenizerDecoratorTest {
 
         String input = " Philipp   Wagner   ";
 
+        // The Tokenizer to wrap:
         ITokenizer tokenizer = new FixedLengthTokenizer(columnDefinition);
-        ITokenizer decoratedTokenizer = new PostProcessingTokenizerDecorator(tokenizer, s -> s.trim());
+        // Define Pre- and Postprocessors:
+        StringPreprocessor preprocessor = new StringPreprocessor(s -> s.toUpperCase());
+        StringPostprocessor postprocessor = new StringPostprocessor(s -> s.trim());
+        // Decorate the Tokenizer:
+        ITokenizer decoratedTokenizer = new ProcessingTokenizerDecorator(tokenizer, preprocessor, postprocessor);
 
         String[] result = decoratedTokenizer.tokenize(input);
 
         Assert.assertNotNull(result);
         Assert.assertEquals(2, result.length);
-        Assert.assertEquals("Philipp", result[0]);
-        Assert.assertEquals("Wagner", result[1]);
+        Assert.assertEquals("PHILIPP", result[0]);
+        Assert.assertEquals("WAGNER", result[1]);
     }
 }
