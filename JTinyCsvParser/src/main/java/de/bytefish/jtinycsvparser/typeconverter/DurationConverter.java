@@ -3,6 +3,8 @@
 
 package de.bytefish.jtinycsvparser.typeconverter;
 
+import de.bytefish.jtinycsvparser.utils.IDurationFormatter;
+
 import java.lang.reflect.Type;
 import java.text.NumberFormat;
 import java.time.Duration;
@@ -11,13 +13,23 @@ import java.util.Locale;
 
 public class DurationConverter implements ITypeConverter<Duration> {
 
+    private IDurationFormatter formatter;
+
     public DurationConverter() {
+        formatter = s -> s;
+    }
+
+    public DurationConverter(IDurationFormatter formatter) {
+        this.formatter = formatter;
     }
 
     @Override
     public Duration convert(String value) {
         try {
-            return Duration.parse(value);
+            // Perform eventual formatting on the string:
+            String transformedText = formatter.toDurationString(value);
+
+            return Duration.parse(transformedText);
         } catch(Exception e) {
             throw new RuntimeException(e);
         }

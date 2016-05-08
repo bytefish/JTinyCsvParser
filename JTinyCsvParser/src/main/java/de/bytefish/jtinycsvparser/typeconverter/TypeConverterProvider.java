@@ -26,6 +26,7 @@ public class TypeConverterProvider implements ITypeConverterProvider {
         add(new FloatConverter());
         add(new IntegerConverter());
         add(new InstantConverter());
+        add(new LocalTimeConverter());
         add(new LocalDateConverter());
         add(new LocalDateTimeConverter());
         add(new LongConverter());
