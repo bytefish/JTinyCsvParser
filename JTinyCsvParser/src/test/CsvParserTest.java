@@ -15,10 +15,8 @@ import org.junit.Test;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
-import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,9 +61,9 @@ public class CsvParserTest {
         public PersonMapping(IObjectCreator creator) {
             super(creator);
 
-            MapProperty(0, String.class, Person::setFirstName);
-            MapProperty(1, String.class, Person::setLastName);
-            MapProperty(2, LocalDate.class, Person::setBirthDate);
+            mapProperty(0, String.class, Person::setFirstName);
+            mapProperty(1, String.class, Person::setLastName);
+            mapProperty(2, LocalDate.class, Person::setBirthDate);
         }
     }
 

@@ -29,7 +29,7 @@ public class CsvMappingTest {
         public SampleEntityMapping(IObjectCreator<SampleEntity> creator) {
             super(creator);
 
-            MapProperty(0, Integer.class, SampleEntity::setX);
+            mapProperty(0, Integer.class, SampleEntity::setX);
         }
     }
 
@@ -37,8 +37,8 @@ public class CsvMappingTest {
         public InvalidSampleEntityMapping(IObjectCreator<SampleEntity> creator) {
             super(creator);
 
-            MapProperty(0, Integer.class, SampleEntity::setX);
-            MapProperty(0, Integer.class, SampleEntity::setX);
+            mapProperty(0, Integer.class, SampleEntity::setX);
+            mapProperty(0, Integer.class, SampleEntity::setX);
         }
     }
 
@@ -49,7 +49,7 @@ public class CsvMappingTest {
         // The Mapping to use for mapping between a CSV File and the Object:
         CsvMapping<SampleEntity> csvMapping = new SampleEntityMapping(objectCreator);
         // Perform an actual mapping between a tokenized CSV Line and the object:
-        CsvMappingResult<SampleEntity> result = csvMapping.Map(new String[] {"1"});
+        CsvMappingResult<SampleEntity> result = csvMapping.map(new String[] {"1"});
         // There shouldn't be an error:
         Assert.assertEquals(null, result.getError());
         // And the Property A should be 1:
@@ -63,7 +63,7 @@ public class CsvMappingTest {
         // The Mapping to use for mapping between a CSV File and the Object:
         CsvMapping<SampleEntity> csvMapping = new SampleEntityMapping(objectCreator);
         // Perform an actual mapping between a tokenized CSV Line and the object:
-        CsvMappingResult<SampleEntity> result = csvMapping.Map(new String[] {"1"});
+        CsvMappingResult<SampleEntity> result = csvMapping.map(new String[] {"1"});
         // There shouldn't be an error:
         Assert.assertEquals(null, result.getError());
         // And the Property A should be 1:
@@ -94,7 +94,7 @@ public class CsvMappingTest {
         // The Mapping to use for mapping between a CSV File and the Object:
         CsvMapping<SampleEntity> csvMapping = new SampleEntityMapping(objectCreator);
         // Perform an actual mapping between a tokenized CSV Line and the object:
-        CsvMappingResult<SampleEntity> result = csvMapping.Map(new String[] {});
+        CsvMappingResult<SampleEntity> result = csvMapping.map(new String[] {});
         // There should be an error:
         Assert.assertNotNull(result.getError());
         // And the Property A should be 1:

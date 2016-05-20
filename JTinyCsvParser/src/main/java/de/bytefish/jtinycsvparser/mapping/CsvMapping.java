@@ -59,20 +59,20 @@ public abstract class CsvMapping<TEntity> {
         this.csvPropertyMappings = new ArrayList<>();
     }
 
-    public <TProperty> void MapProperty(int columnIndex, Type targetType, BiConsumer<TEntity, TProperty> setter) {
+    public <TProperty> void mapProperty(int columnIndex, Type targetType, BiConsumer<TEntity, TProperty> setter) {
         ITypeConverter<TProperty> converter = typeConverterProvider.resolve(targetType);
 
-        MapProperty(columnIndex, targetType, setter, converter);
+        mapProperty(columnIndex, targetType, setter, converter);
     }
 
-    public <TProperty> void MapProperty(int columnIndex, Type targetType, BiConsumer<TEntity, TProperty> setter, ITypeConverter<TProperty> converter) {
+    public <TProperty> void mapProperty(int columnIndex, Type targetType, BiConsumer<TEntity, TProperty> setter, ITypeConverter<TProperty> converter) {
         if(csvPropertyMappings.stream().anyMatch(e -> e.getColumnIndex() == columnIndex)) {
             throw new DuplicateColumnMappingException("Duplicate Mapping for Column " + columnIndex);
         }
         csvPropertyMappings.add(new IndexToPropertyMapping(columnIndex, new CsvPropertyMapping(setter, converter)));
     }
 
-    public CsvMappingResult<TEntity> Map(String[] values) {
+    public CsvMappingResult<TEntity> map(String[] values) {
 
         TEntity entity = (TEntity) creator.create();
 

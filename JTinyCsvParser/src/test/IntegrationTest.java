@@ -62,9 +62,9 @@ public class IntegrationTest {
         {
             super(creator);
 
-            MapProperty(0, String.class, LocalWeatherData::setWBAN);
-            MapProperty(1, LocalDate.class, LocalWeatherData::setDate, new LocalDateConverter(DateTimeFormatter.ofPattern("yyyyMMdd")));
-            MapProperty(4, String.class, LocalWeatherData::setSkyCondition);
+            mapProperty(0, String.class, LocalWeatherData::setWBAN);
+            mapProperty(1, LocalDate.class, LocalWeatherData::setDate, new LocalDateConverter(DateTimeFormatter.ofPattern("yyyyMMdd")));
+            mapProperty(4, String.class, LocalWeatherData::setSkyCondition);
         }
     }
 
