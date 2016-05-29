@@ -15,11 +15,13 @@ It makes no use of Reflection and is very easy to use and extend.
 
 You can add the following dependencies to your pom.xml to include [JTinyCsvParser] in your project.
 
+```xml
 <dependency>
 	<groupId>de.bytefish</groupId>
 	<artifactId>jtinycsvparser</artifactId>
 	<version>1.1</version>
 </dependency>
+```
 
 ## Quickstart ##
 
