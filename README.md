@@ -13,7 +13,7 @@ It makes no use of Reflection and is very easy to use and extend.
 
 [JTinyCsvParser] is available in the Central Maven Repository. 
 
-You can add the following dependencies to your pom.xml to include ``elasticutils`` in your project.
+You can add the following dependencies to your pom.xml to include [JTinyCsvParser] in your project.
 
 <dependency>
 	<groupId>de.bytefish</groupId>
