@@ -7,6 +7,8 @@ public class StringUtils {
 
     private StringUtils() {}
 
+    public static String EmptyString = "";
+
     public static boolean isNullOrWhiteSpace(String input) {
         return  input == null || input.trim().length() == 0;
     }

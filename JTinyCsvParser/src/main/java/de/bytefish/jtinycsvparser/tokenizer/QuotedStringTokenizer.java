@@ -3,6 +3,7 @@
 
 package de.bytefish.jtinycsvparser.tokenizer;
 
+import de.bytefish.jtinycsvparser.tokenizer.ITokenizer;
 import de.bytefish.jtinycsvparser.utils.StringUtils;
 
 import java.util.ArrayList;
