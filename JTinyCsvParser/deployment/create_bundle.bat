@@ -16,7 +16,7 @@ set STDOUT=stdout.log
 set STDERR=stderr.log
 
 :: Version to build the bundle for:
-set VERSION=1.1
+set VERSION=1.2
 
 :: Set the Target Bundle file:
 set TARGET_BUNDLE=bundle\jtinycsvparser-bundle-%VERSION%.jar
