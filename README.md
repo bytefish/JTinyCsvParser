@@ -5,7 +5,7 @@
 [TinyCsvParser]: https://github.com/bytefish/TinyCsvParser
 
 
-[JTinyCsvParser] is a high-performance CSV Parser for Java 1.8. As the name implies it is a Java version of [TinyCsvParser].
+[JTinyCsvParser] is a high-performance CSV Parser for Java. As the name implies it is a Java version of [TinyCsvParser].
 
 It makes no use of Reflection and is very easy to use and extend.
 
