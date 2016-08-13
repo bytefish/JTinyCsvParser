@@ -22,6 +22,12 @@ You can add the following dependencies to your pom.xml to include [JTinyCsvParse
 </dependency>
 ```
 
+## Documentation ##
+
+[JTinyCsvParser] comes with a documentation, which is located at:
+
+* [http://bytefish.github.io/JTinyCsvParser/](http://bytefish.github.io/JTinyCsvParser/)
+
 ## Quickstart ##
 
 This is only an example for the most common use of JTinyCsvParser. For more detailed information on custom formats and more advanced use-cases, 
