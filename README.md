@@ -19,7 +19,7 @@ You can add the following dependencies to your pom.xml to include [JTinyCsvParse
 <dependency>
 	<groupId>de.bytefish</groupId>
 	<artifactId>jtinycsvparser</artifactId>
-	<version>1.1</version>
+	<version>1.2</version>
 </dependency>
 ```
 
