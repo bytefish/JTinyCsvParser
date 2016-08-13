@@ -1,0 +1,515 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Benchmark &mdash; JTinyCsvParser 1.2 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="JTinyCsvParser 1.2 documentation" href="../index.html"/>
+        <link rel="next" title="Contributing" href="contributing.html"/>
+        <link rel="prev" title="Parsing Enums" href="tutorials/parsing_enums.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> JTinyCsvParser
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userguide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Benchmark</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#dataset">Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setup">Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#software">Software</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#hardware">Hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#measuring-the-elapsed-time">Measuring the Elapsed Time</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#reading-a-file-sequentially">Reading a File Sequentially</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#benchmark-code">Benchmark Code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#benchmark-result">Benchmark Result</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#benchmarking-jtinycsvparser">Benchmarking JTinyCsvParser</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#domain-model">Domain Model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#csvmapping">CsvMapping</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#benchmarking-jtinycsvparser-single-threaded">Benchmarking JTinyCsvParser (Single Threaded)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Benchmark Code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#benchmark-results">Benchmark Results</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#benchmarking-jtinycsvparser-parallel-streams-without-jdk-bugfix">Benchmarking JTinyCsvParser (Parallel Streams, Without JDK Bugfix)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#why-using-a-parallel-stream">Why using a Parallel Stream?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">Benchmark Code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#benchmark-results-without-jdk-bugfix">Benchmark Results (without JDK Bugfix)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#benchmarking-jtinycsvparser-parallel-streams-with-jdk-bugfix">Benchmarking JTinyCsvParser (Parallel Streams, With JDK Bugfix)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">JTinyCsvParser</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+    <li>Benchmark</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/sections/benchmark.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="benchmark">
+<span id="id1"></span><h1>Benchmark<a class="headerlink" href="#benchmark" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="dataset">
+<h2>Dataset<a class="headerlink" href="#dataset" title="Permalink to this headline">¶</a></h2>
+<p>In this benchmark the local weather data in March 2015 gathered by all weather stations in the USA is parsed.</p>
+<p>You can obtain the data <code class="code docutils literal"><span class="pre">QCLCD201503.zip</span></code> from:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://www.ncdc.noaa.gov/orders/qclcd](http://www.ncdc.noaa.gov/orders/qclcd">http://www.ncdc.noaa.gov/orders/qclcd](http://www.ncdc.noaa.gov/orders/qclcd</a></li>
+</ul>
+<p>The File size is <code class="code docutils literal"><span class="pre">557</span> <span class="pre">MB</span></code> and it has <code class="code docutils literal"><span class="pre">4,496,262</span></code> lines.</p>
+</div>
+<div class="section" id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="software">
+<h3>Software<a class="headerlink" href="#software" title="Permalink to this headline">¶</a></h3>
+<p>The Java Version used is <code class="code docutils literal"><span class="pre">1.8.0_66</span></code>.</p>
+<div class="highlight-python"><div class="highlight"><pre>C:\Users\philipp&gt;java -version
+java version &quot;1.8.0_66&quot;
+Java(TM) SE Runtime Environment (build 1.8.0_66-b18)
+Java HotSpot(TM) 64-Bit Server VM (build 25.66-b18, mixed mode)
+</pre></div>
+</div>
+</div>
+<div class="section" id="hardware">
+<h3>Hardware<a class="headerlink" href="#hardware" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Intel (R) Core (TM) i5-3450</li>
+<li>Hitachi HDS721010CLA330 (1 TB Capacity, 32 MB Cache, 7200 RPM)</li>
+<li>16 GB RAM</li>
+</ul>
+</div>
+<div class="section" id="measuring-the-elapsed-time">
+<h3>Measuring the Elapsed Time<a class="headerlink" href="#measuring-the-elapsed-time" title="Permalink to this headline">¶</a></h3>
+<p>Java 1.8 introduced new classes like <code class="code docutils literal"><span class="pre">LocalDate</span></code>, <code class="code docutils literal"><span class="pre">LocalDateTime</span></code> or <code class="code docutils literal"><span class="pre">Duration</span></code> to work with time. Combined with lambda functions we can
+easily write a nice helper class <code class="code docutils literal"><span class="pre">MeasurementUtils</span></code>, that measures the elapsed time of a function.</p>
+<p>You simply have to pass a description and an <code class="code docutils literal"><span class="pre">Action</span></code> into the <code class="code docutils literal"><span class="pre">MeasurementUtils.MeasureElapsedTime</span></code> method, and it will print out the elapsed time.</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="c1">// Copyright (c) Philipp Wagner. All rights reserved.</span>
+<span class="c1">// Licensed under the MIT license. See LICENSE file in the project root for full license information.</span>
+
+<span class="kn">package</span> <span class="nn">de.bytefish.jtinycsvparser.utils</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.time.Duration</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.time.Instant</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MeasurementUtils</span> <span class="o">{</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Java 1.8 doesn&#39;t have a Consumer without parameters (why not?), so we</span>
+<span class="cm">     * are defining a FunctionalInterface with a nullary function.</span>
+<span class="cm">     *</span>
+<span class="cm">     * I call it Action, so I am consistent with .NET.</span>
+<span class="cm">     */</span>
+    <span class="nd">@FunctionalInterface</span>
+    <span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Action</span> <span class="o">{</span>
+
+        <span class="kt">void</span> <span class="nf">invoke</span><span class="o">();</span>
+
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">MeasureElapsedTime</span><span class="o">(</span><span class="n">String</span> <span class="n">description</span><span class="o">,</span> <span class="n">Action</span> <span class="n">action</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Duration</span> <span class="n">duration</span> <span class="o">=</span> <span class="n">MeasureElapsedTime</span><span class="o">(</span><span class="n">action</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;[%s] %s&quot;</span><span class="o">,</span> <span class="n">description</span><span class="o">,</span> <span class="n">duration</span><span class="o">));</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Duration</span> <span class="nf">MeasureElapsedTime</span><span class="o">(</span><span class="n">Action</span> <span class="n">action</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Instant</span> <span class="n">start</span> <span class="o">=</span> <span class="n">Instant</span><span class="o">.</span><span class="na">now</span><span class="o">();</span>
+
+        <span class="n">action</span><span class="o">.</span><span class="na">invoke</span><span class="o">();</span>
+
+        <span class="n">Instant</span> <span class="n">end</span> <span class="o">=</span> <span class="n">Instant</span><span class="o">.</span><span class="na">now</span><span class="o">();</span>
+
+        <span class="k">return</span> <span class="n">Duration</span><span class="o">.</span><span class="na">between</span><span class="o">(</span><span class="n">start</span><span class="o">,</span> <span class="n">end</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="reading-a-file-sequentially">
+<h2>Reading a File Sequentially<a class="headerlink" href="#reading-a-file-sequentially" title="Permalink to this headline">¶</a></h2>
+<p>First we have to find out, if the CSV parsing is an I/O or CPU bound task. The lower bound of the CSV Parsing is obviously given by the time needed to read a text
+file, the actual CSV parsing and mapping cannot be any faster. I am using <code class="code docutils literal"><span class="pre">Files.lines</span></code>, in order to consume a <code class="docutils literal"><span class="pre">Stream&lt;String&gt;</span></code> with the data.</p>
+<div class="section" id="benchmark-code">
+<h3>Benchmark Code<a class="headerlink" href="#benchmark-code" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-java"><div class="highlight"><pre><span class="nd">@Test</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">testReadFromFile_SequentialRead</span><span class="o">()</span> <span class="o">{</span>
+
+    <span class="n">MeasurementUtils</span><span class="o">.</span><span class="na">MeasureElapsedTime</span><span class="o">(</span><span class="s">&quot;LocalWeatherData_SequentialRead&quot;</span><span class="o">,</span> <span class="o">()</span> <span class="o">-&gt;</span> <span class="o">{</span>
+
+        <span class="c1">// Read the file. Make sure to wrap it in a try, so the file handle gets disposed properly:</span>
+        <span class="k">try</span><span class="o">(</span><span class="n">Stream</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">stream</span> <span class="o">=</span> <span class="n">Files</span><span class="o">.</span><span class="na">lines</span><span class="o">(</span><span class="n">FileSystems</span><span class="o">.</span><span class="na">getDefault</span><span class="o">().</span><span class="na">getPath</span><span class="o">(</span><span class="s">&quot;C:\\Users\\philipp\\Downloads\\csv&quot;</span><span class="o">,</span> <span class="s">&quot;201503hourly.txt&quot;</span><span class="o">),</span> <span class="n">StandardCharsets</span><span class="o">.</span><span class="na">UTF_8</span><span class="o">))</span> <span class="o">{</span>
+
+            <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="n">stream</span>
+                    <span class="o">.</span><span class="na">collect</span><span class="o">(</span><span class="n">Collectors</span><span class="o">.</span><span class="na">toList</span><span class="o">());</span> <span class="c1">// turn it into a List!</span>
+
+            <span class="c1">// Make sure we got the correct amount of lines in the file:</span>
+            <span class="n">Assert</span><span class="o">.</span><span class="na">assertEquals</span><span class="o">(</span><span class="mi">4496263</span><span class="o">,</span> <span class="n">result</span><span class="o">.</span><span class="na">size</span><span class="o">());</span>
+
+        <span class="o">}</span> <span class="k">catch</span><span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="n">RuntimeException</span><span class="o">(</span><span class="n">e</span><span class="o">);</span>
+        <span class="o">}</span>
+
+    <span class="o">});</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Make sure to always close the Stream returned by <code class="code docutils literal"><span class="pre">Files.lines</span></code>, because it is not closed automatically!</p>
+</div>
+<div class="section" id="benchmark-result">
+<h3>Benchmark Result<a class="headerlink" href="#benchmark-result" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre>[LocalWeatherData_SequentialRead] PT4.258S
+</pre></div>
+</div>
+<p>Reading the CSV File takes approximately <code class="code docutils literal"><span class="pre">4.3</span></code> seconds. So the entire mapping from CSV to objects cannot be faster, than <code class="code docutils literal"><span class="pre">4.3</span></code> seconds.</p>
+</div>
+</div>
+<div class="section" id="benchmarking-jtinycsvparser">
+<h2>Benchmarking JTinyCsvParser<a class="headerlink" href="#benchmarking-jtinycsvparser" title="Permalink to this headline">¶</a></h2>
+<p>In order to parse a CSV file into a strongly-typed object, you have to define the domain model in your application and a <code class="code docutils literal"><span class="pre">CsvMapping</span></code> for the class.</p>
+<div class="section" id="domain-model">
+<h3>Domain Model<a class="headerlink" href="#domain-model" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">LocalWeatherData</span>
+<span class="o">{</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">WBAN</span><span class="o">;</span>
+
+    <span class="kd">private</span> <span class="n">LocalDate</span> <span class="n">Date</span><span class="o">;</span>
+
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">SkyCondition</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getWBAN</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">WBAN</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setWBAN</span><span class="o">(</span><span class="n">String</span> <span class="n">WBAN</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">WBAN</span> <span class="o">=</span> <span class="n">WBAN</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">LocalDate</span> <span class="nf">getDate</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">Date</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setDate</span><span class="o">(</span><span class="n">LocalDate</span> <span class="n">date</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Date</span> <span class="o">=</span> <span class="n">date</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getSkyCondition</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">SkyCondition</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setSkyCondition</span><span class="o">(</span><span class="n">String</span> <span class="n">skyCondition</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">SkyCondition</span> <span class="o">=</span> <span class="n">skyCondition</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="csvmapping">
+<h3>CsvMapping<a class="headerlink" href="#csvmapping" title="Permalink to this headline">¶</a></h3>
+<p>We only want to map the columns <code class="code docutils literal"><span class="pre">WBAN</span></code> (Column 0), <code class="code docutils literal"><span class="pre">Date</span></code> (Column 1) and <code class="code docutils literal"><span class="pre">SkyCondition</span></code> (Column 4) to the Domain Model, which is done by using the <code class="code docutils literal"><span class="pre">mapProperty</span></code> function.</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">LocalWeatherDataMapper</span> <span class="kd">extends</span> <span class="n">CsvMapping</span><span class="o">&lt;</span><span class="n">LocalWeatherData</span><span class="o">&gt;</span>
+<span class="o">{</span>
+      <span class="kd">public</span> <span class="nf">LocalWeatherDataMapper</span><span class="o">(</span><span class="n">IObjectCreator</span> <span class="n">creator</span><span class="o">)</span>
+      <span class="o">{</span>
+             <span class="kd">super</span><span class="o">(</span><span class="n">creator</span><span class="o">);</span>
+
+             <span class="n">mapProperty</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">String</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">LocalWeatherData</span><span class="o">::</span><span class="n">setWBAN</span><span class="o">);</span>
+             <span class="n">mapProperty</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">LocalDate</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">LocalWeatherData</span><span class="o">::</span><span class="n">setDate</span><span class="o">,</span> <span class="k">new</span> <span class="n">LocalDateConverter</span><span class="o">(</span><span class="n">DateTimeFormatter</span><span class="o">.</span><span class="na">ofPattern</span><span class="o">(</span><span class="s">&quot;yyyyMMdd&quot;</span><span class="o">)));</span>
+             <span class="n">mapProperty</span><span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="n">String</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">LocalWeatherData</span><span class="o">::</span><span class="n">setSkyCondition</span><span class="o">);</span>
+      <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="benchmarking-jtinycsvparser-single-threaded">
+<h2>Benchmarking JTinyCsvParser (Single Threaded)<a class="headerlink" href="#benchmarking-jtinycsvparser-single-threaded" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id2">
+<h3>Benchmark Code<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-java"><div class="highlight"><pre><span class="nd">@Test</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">testReadFromFile_LocalWeatherData_Sequential</span><span class="o">()</span> <span class="o">{</span>
+
+    <span class="c1">// Not in parallel:</span>
+    <span class="n">CsvParserOptions</span> <span class="n">options</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CsvParserOptions</span><span class="o">(</span><span class="kc">true</span><span class="o">,</span> <span class="s">&quot;,&quot;</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
+    <span class="c1">// The Mapping to employ:</span>
+    <span class="n">LocalWeatherDataMapper</span> <span class="n">mapping</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LocalWeatherDataMapper</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="k">new</span> <span class="n">LocalWeatherData</span><span class="o">());</span>
+    <span class="c1">// Construct the parser:</span>
+    <span class="n">CsvParser</span><span class="o">&lt;</span><span class="n">LocalWeatherData</span><span class="o">&gt;</span> <span class="n">parser</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CsvParser</span><span class="o">&lt;&gt;(</span><span class="n">options</span><span class="o">,</span> <span class="n">mapping</span><span class="o">);</span>
+    <span class="c1">// Measure the Time using the MeasurementUtils:</span>
+    <span class="n">MeasurementUtils</span><span class="o">.</span><span class="na">MeasureElapsedTime</span><span class="o">(</span><span class="s">&quot;LocalWeatherData_Sequential_Parse&quot;</span><span class="o">,</span> <span class="o">()</span> <span class="o">-&gt;</span> <span class="o">{</span>
+
+        <span class="c1">// Read the file. Make sure to wrap it in a try, so the file handle gets disposed properly:</span>
+        <span class="k">try</span><span class="o">(</span><span class="n">Stream</span><span class="o">&lt;</span><span class="n">CsvMappingResult</span><span class="o">&lt;</span><span class="n">LocalWeatherData</span><span class="o">&gt;&gt;</span> <span class="n">stream</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="na">readFromFile</span><span class="o">(</span><span class="n">FileSystems</span><span class="o">.</span><span class="na">getDefault</span><span class="o">().</span><span class="na">getPath</span><span class="o">(</span><span class="s">&quot;C:\\Users\\philipp\\Downloads\\csv&quot;</span><span class="o">,</span> <span class="s">&quot;201503hourly.txt&quot;</span><span class="o">),</span> <span class="n">StandardCharsets</span><span class="o">.</span><span class="na">UTF_8</span><span class="o">))</span> <span class="o">{</span>
+
+                <span class="n">List</span><span class="o">&lt;</span><span class="n">CsvMappingResult</span><span class="o">&lt;</span><span class="n">LocalWeatherData</span><span class="o">&gt;&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="n">stream</span>
+                        <span class="o">.</span><span class="na">filter</span><span class="o">(</span><span class="n">e</span> <span class="o">-&gt;</span> <span class="n">e</span><span class="o">.</span><span class="na">isValid</span><span class="o">())</span>
+                        <span class="o">.</span><span class="na">collect</span><span class="o">(</span><span class="n">Collectors</span><span class="o">.</span><span class="na">toList</span><span class="o">());</span> <span class="c1">// turn it into a List!</span>
+
+            <span class="n">Assert</span><span class="o">.</span><span class="na">assertEquals</span><span class="o">(</span><span class="mi">4496262</span><span class="o">,</span> <span class="n">result</span><span class="o">.</span><span class="na">size</span><span class="o">());</span>
+        <span class="o">}</span>
+    <span class="o">});</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="benchmark-results">
+<h3>Benchmark Results<a class="headerlink" href="#benchmark-results" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre>[LocalWeatherData_Sequential_Parse] PT19.252S
+</pre></div>
+</div>
+<p>Parsing the entire file takes approximately 20 seconds. I think this is a reasonable speed for a Single Threaded run. A lot of stuff is going on in the parsing, especially Auto Boxing Values is a
+time-consuming task I guess. I didn&#8217;t profile the entire library, so I cannot tell exactely where one could squeeze out the last CPU cycles.</p>
+</div>
+</div>
+<div class="section" id="benchmarking-jtinycsvparser-parallel-streams-without-jdk-bugfix">
+<h2>Benchmarking JTinyCsvParser (Parallel Streams, Without JDK Bugfix)<a class="headerlink" href="#benchmarking-jtinycsvparser-parallel-streams-without-jdk-bugfix" title="Permalink to this headline">¶</a></h2>
+<p>Java 1.8 introduced Parallel Streams to simplify parallel computing in applications.</p>
+<p>You can basically we can turn every simple Stream into a Parallel Stream, by calling the <code class="code docutils literal"><span class="pre">parallel()</span></code> method on it. One weird thing is, that I don&#8217;t have any control over
+the degree of parallelism at this point. By default the number of processors is used for the default <code class="code docutils literal"><span class="pre">ForkJoinPool</span></code>. But describing Parallel Streams in Java 1,.8 is out of scope
+for this article.</p>
+<div class="section" id="why-using-a-parallel-stream">
+<h3>Why using a Parallel Stream?<a class="headerlink" href="#why-using-a-parallel-stream" title="Permalink to this headline">¶</a></h3>
+<p>We have learnt, that the mapping to objects is largely CPU bound. It is a well-defined problem and by throwing some more cores at it, we should see a significantly improved performance.</p>
+</div>
+<div class="section" id="id3">
+<h3>Benchmark Code<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>In order to process the data in parallel, you have to set the <code class="docutils literal"><span class="pre">parallel</span></code> parameter in the <code class="docutils literal"><span class="pre">CsvParserOption</span></code>.</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="nd">@Test</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">testReadFromFile_LocalWeatherData_Parallel</span><span class="o">()</span> <span class="o">{</span>
+
+    <span class="c1">// See the third constructor argument. It sets the Parallel processing to true!</span>
+    <span class="n">CsvParserOptions</span> <span class="n">options</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CsvParserOptions</span><span class="o">(</span><span class="kc">true</span><span class="o">,</span> <span class="s">&quot;,&quot;</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+    <span class="c1">// The Mapping to employ:</span>
+    <span class="n">LocalWeatherDataMapper</span> <span class="n">mapping</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LocalWeatherDataMapper</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="k">new</span> <span class="n">LocalWeatherData</span><span class="o">());</span>
+    <span class="c1">// Construct the parser:</span>
+    <span class="n">CsvParser</span><span class="o">&lt;</span><span class="n">LocalWeatherData</span><span class="o">&gt;</span> <span class="n">parser</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CsvParser</span><span class="o">&lt;&gt;(</span><span class="n">options</span><span class="o">,</span> <span class="n">mapping</span><span class="o">);</span>
+    <span class="c1">// Measure the Time using the MeasurementUtils:</span>
+    <span class="n">MeasurementUtils</span><span class="o">.</span><span class="na">MeasureElapsedTime</span><span class="o">(</span><span class="s">&quot;LocalWeatherData_Parallel_Parse&quot;</span><span class="o">,</span> <span class="o">()</span> <span class="o">-&gt;</span> <span class="o">{</span>
+
+        <span class="c1">// Read the file. Make sure to wrap it in a try, so the file handle gets disposed properly:</span>
+        <span class="k">try</span><span class="o">(</span><span class="n">Stream</span><span class="o">&lt;</span><span class="n">CsvMappingResult</span><span class="o">&lt;</span><span class="n">LocalWeatherData</span><span class="o">&gt;&gt;</span> <span class="n">stream</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="na">readFromFile</span><span class="o">(</span><span class="n">FileSystems</span><span class="o">.</span><span class="na">getDefault</span><span class="o">().</span><span class="na">getPath</span><span class="o">(</span><span class="s">&quot;C:\\Users\\philipp\\Downloads\\csv&quot;</span><span class="o">,</span> <span class="s">&quot;201503hourly.txt&quot;</span><span class="o">),</span> <span class="n">StandardCharsets</span><span class="o">.</span><span class="na">UTF_8</span><span class="o">))</span> <span class="o">{</span>
+
+            <span class="n">List</span><span class="o">&lt;</span><span class="n">CsvMappingResult</span><span class="o">&lt;</span><span class="n">LocalWeatherData</span><span class="o">&gt;&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="n">stream</span>
+                    <span class="o">.</span><span class="na">filter</span><span class="o">(</span><span class="n">e</span> <span class="o">-&gt;</span> <span class="n">e</span><span class="o">.</span><span class="na">isValid</span><span class="o">())</span>
+                    <span class="o">.</span><span class="na">collect</span><span class="o">(</span><span class="n">Collectors</span><span class="o">.</span><span class="na">toList</span><span class="o">());</span> <span class="c1">// turn it into a List!</span>
+
+            <span class="n">Assert</span><span class="o">.</span><span class="na">assertEquals</span><span class="o">(</span><span class="mi">4496262</span><span class="o">,</span> <span class="n">result</span><span class="o">.</span><span class="na">size</span><span class="o">());</span>
+
+        <span class="o">}</span>
+    <span class="o">});</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="benchmark-results-without-jdk-bugfix">
+<h3>Benchmark Results (without JDK Bugfix)<a class="headerlink" href="#benchmark-results-without-jdk-bugfix" title="Permalink to this headline">¶</a></h3>
+<p>The results are not satisfying! Although all cores are utilized during processing the file, it actually leads to a slow-down.</p>
+<div class="highlight-python"><div class="highlight"><pre>[LocalWeatherData_Parallel_Parse] PT26.232S
+</pre></div>
+</div>
+<p>Why is that?</p>
+<p>Well in order to parallelize a task Java has to split the problem into sub problems somehow. This is done by using a <code class="code docutils literal"><span class="pre">Spliterator</span></code>, which basically means &#8220;splittable Iterator&#8221;.
+The <code class="code docutils literal"><span class="pre">Spliterator</span></code> has a method <code class="code docutils literal"><span class="pre">trySplit()</span></code>, that splits off a chunk of elements to be processed by the threads. I assume, that the estimation about the size of the data
+is not known ahead and that&#8217;s why Java 1.8 initializes the estimated size with <code class="code docutils literal"><span class="pre">Long.MAX_VALUE</span></code> (unknown size).</p>
+<p>We can find the confirmation for it, if we take a look into the OpenJDK Bugtracker titled:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://bugs.openjdk.java.net/browse/JDK-8072773">JDK-8072773 Files.lines needs a better splitting implementation for stream source</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="benchmarking-jtinycsvparser-parallel-streams-with-jdk-bugfix">
+<h2>Benchmarking JTinyCsvParser (Parallel Streams, With JDK Bugfix)<a class="headerlink" href="#benchmarking-jtinycsvparser-parallel-streams-with-jdk-bugfix" title="Permalink to this headline">¶</a></h2>
+<p>We have seen, that there is a bug in the <code class="code docutils literal"><span class="pre">Spliterator</span></code> for the <code class="code docutils literal"><span class="pre">Files.lines</span></code> method, but the OpenJDK Bug ticket <a class="reference external" href="https://bugs.openjdk.java.net/browse/JDK-8072773">JDK-8072773</a> also references a bug fix.</p>
+<p>When I backport the bugfix mentioned in <a class="reference external" href="https://bugs.openjdk.java.net/browse/JDK-8072773">JDK-8072773</a> to Java 1.8 (which is very easy), then the file is split into correctly sized chunks. The file is then
+parsed in <code class="code docutils literal"><span class="pre">12</span></code> seconds.</p>
+<div class="highlight-python"><div class="highlight"><pre>[LocalWeatherData_Parallel_Parse] PT11.773S
+</pre></div>
+</div>
+<p>But since the OpenJDK code is released under terms of the GPL v2 license, I cannot include the mentioned bugfix into <a class="reference external" href="https://github.com/bytefish/JTinyCsvParser">JTinyCsvParser</a>.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="contributing.html" class="btn btn-neutral float-right" title="Contributing" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="tutorials/parsing_enums.html" class="btn btn-neutral" title="Parsing Enums" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Philipp Wagner.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.2',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
