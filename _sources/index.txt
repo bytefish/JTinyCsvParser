@@ -1,8 +1,8 @@
 .. include:: common/roles.txt
 .. include:: common/stub-topic.txt
 
-TinyCsvParser
-=============
+JTinyCsvParser
+==============
 
 Welcome to the `JTinyCsvParser`_ documentation!
 
@@ -32,7 +32,7 @@ Topics
 Getting involved
 ~~~~~~~~~~~~~~~~
 
-Want to get involved? Learn :ref:`how to contribute <contributing>` and visit the `GitHub repository <https://github.com/bytefish/TinyCsvParser>`_.
+Want to get involved? Learn :ref:`how to contribute <contributing>` and visit the `GitHub repository <https://github.com/bytefish/JTinyCsvParser>`_.
     
 Indices and tables
 """"""""""""""""""
@@ -42,4 +42,4 @@ Indices and tables
 * :ref:`search`
 
 .. _MIT license: https://opensource.org/licenses/MIT
-.. _JTinyCsvParser: https://github.com/bytefish/TinyCsvParser
+.. _JTinyCsvParser: https://github.com/bytefish/JTinyCsvParser

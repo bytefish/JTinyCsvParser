@@ -32,9 +32,10 @@ Then define the class the results should be mapped to:
 
     public class Vehicle {
     
-        private VehicleTypeEnum vehicleType;
         private String name;
-    
+        
+        private VehicleTypeEnum vehicleType;
+        
         public String getName() {
             return name;
         }
@@ -62,7 +63,7 @@ a custom converter has to be used, which simply is a :code:`EnumConverter<Vehicl
         public CsvVehicleMapping(IObjectCreator creator)
         {
             super(creator);
-			
+            
             mapProperty(0, VehicleTypeEnum.class, Vehicle::setVehicleType, new EnumConverter<>(VehicleTypeEnum.class));
             mapProperty(1, String.class, Vehicle::setName);
         }
@@ -70,4 +71,4 @@ a custom converter has to be used, which simply is a :code:`EnumConverter<Vehicl
 
 And then the CSV data can be parsed as usual.
 
-.. _TinyCsvParser: https://github.com/bytefish/TinyCsvParser
+.. _JTinyCsvParser: https://github.com/bytefish/JTinyCsvParser
