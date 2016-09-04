@@ -28,10 +28,10 @@ The Java Version used is :code:`1.8.0_66`.
 
 ::
 
-	C:\Users\philipp>java -version
-	java version "1.8.0_66"
-	Java(TM) SE Runtime Environment (build 1.8.0_66-b18)
-	Java HotSpot(TM) 64-Bit Server VM (build 25.66-b18, mixed mode)
+    C:\Users\philipp>java -version
+    java version "1.8.0_66"
+    Java(TM) SE Runtime Environment (build 1.8.0_66-b18)
+    Java HotSpot(TM) 64-Bit Server VM (build 25.66-b18, mixed mode)
 
 Hardware
 --------
@@ -129,7 +129,7 @@ Benchmark Result
 
 ::
 
-	[LocalWeatherData_SequentialRead] PT4.258S
+    [LocalWeatherData_SequentialRead] PT4.258S
 
 Reading the CSV File takes approximately :code:`4.3` seconds. So the entire mapping from CSV to objects cannot be faster, than :code:`4.3` seconds.
 
@@ -186,14 +186,14 @@ We only want to map the columns :code:`WBAN` (Column 0), :code:`Date` (Column 1)
 
     public class LocalWeatherDataMapper extends CsvMapping<LocalWeatherData>
     {
-  	  public LocalWeatherDataMapper(IObjectCreator creator)
-  	  {
-  	 	 super(creator);
+        public LocalWeatherDataMapper(IObjectCreator creator)
+        {
+            super(creator);
         
-  	 	 mapProperty(0, String.class, LocalWeatherData::setWBAN);
-  	 	 mapProperty(1, LocalDate.class, LocalWeatherData::setDate, new LocalDateConverter(DateTimeFormatter.ofPattern("yyyyMMdd")));
-  	 	 mapProperty(4, String.class, LocalWeatherData::setSkyCondition);
-  	  }
+            mapProperty(0, String.class, LocalWeatherData::setWBAN);
+            mapProperty(1, LocalDate.class, LocalWeatherData::setDate, new LocalDateConverter(DateTimeFormatter.ofPattern("yyyyMMdd")));
+            mapProperty(4, String.class, LocalWeatherData::setSkyCondition);
+        }
     }
 
 
@@ -234,7 +234,7 @@ Benchmark Results
 
 ::
 
-	[LocalWeatherData_Sequential_Parse] PT19.252S
+    [LocalWeatherData_Sequential_Parse] PT19.252S
 
 Parsing the entire file takes approximately 20 seconds. I think this is a reasonable speed for a Single Threaded run. A lot of stuff is going on in the parsing, especially Auto Boxing Values is a 
 time-consuming task I guess. I didn't profile the entire library, so I cannot tell exactely where one could squeeze out the last CPU cycles.
@@ -292,7 +292,7 @@ The results are not satisfying! Although all cores are utilized during processin
 
 ::
 
-	[LocalWeatherData_Parallel_Parse] PT26.232S
+    [LocalWeatherData_Parallel_Parse] PT26.232S
 
 Why is that?
 
@@ -315,7 +315,7 @@ parsed in :code:`12` seconds.
 
 ::
 
-	[LocalWeatherData_Parallel_Parse] PT11.773S
+    [LocalWeatherData_Parallel_Parse] PT11.773S
 
 But since the OpenJDK code is released under terms of the GPL v2 license, I cannot include the mentioned bugfix into `JTinyCsvParser`_.
 

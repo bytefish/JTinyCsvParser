@@ -17,11 +17,11 @@ You can add the following dependencies to your pom.xml to include JTinyCsvParser
 
 .. code-block:: xml
 
-	<dependency>
-		<groupId>de.bytefish</groupId>
-		<artifactId>jtinycsvparser</artifactId>
-		<version>1.2</version>
-	</dependency>
+    <dependency>
+        <groupId>de.bytefish</groupId>
+        <artifactId>jtinycsvparser</artifactId>
+        <version>1.2</version>
+    </dependency>
 
 
 Getting Started
@@ -40,36 +40,36 @@ The corresponding domain model in our C# code might look like this.
 
 .. code-block:: java
 
-	public class Person {
-	
-		private String firstName;
-		private String lastName;
-		private LocalDate BirthDate;
-	
-		public String getFirstName() {
-			return firstName;
-		}
-	
-		public void setFirstName(String firstName) {
-			this.firstName = firstName;
-		}
-	
-		public String getLastName() {
-			return lastName;
-		}
-	
-		public void setLastName(String lastName) {
-			this.lastName = lastName;
-		}
-	
-		public LocalDate getBirthDate() {
-			return BirthDate;
-		}
-	
-		public void setBirthDate(LocalDate birthDate) {
-			BirthDate = birthDate;
-		}
-	}
+    public class Person {
+    
+        private String firstName;
+        private String lastName;
+        private LocalDate BirthDate;
+    
+        public String getFirstName() {
+            return firstName;
+        }
+    
+        public void setFirstName(String firstName) {
+            this.firstName = firstName;
+        }
+    
+        public String getLastName() {
+            return lastName;
+        }
+    
+        public void setLastName(String lastName) {
+            this.lastName = lastName;
+        }
+    
+        public LocalDate getBirthDate() {
+            return BirthDate;
+        }
+    
+        public void setBirthDate(LocalDate birthDate) {
+            BirthDate = birthDate;
+        }
+    }
 
 When using `JTinyCsvParser`_ you have to define the mapping between the columns in the CSV data and 
 the property in you domain model, which is done by implementing the class :code:`CsvMapping<TEntity>`, 
@@ -92,7 +92,7 @@ to instantiate instances of the target objects, without using the Java Reflectio
     }
 
 
-	
+    
 The method :code:`mapProperty` is used to map between the column number in the CSV file and the property in the 
 domain model. 
 
@@ -103,37 +103,37 @@ as :code:`UTF8`.
 .. code-block:: java
 
     public class CsvParserTest {
-	
+    
         @Test
         public void testParse_readFromFile() {
-		
+        
             // Use , as column delimiter and do not skip the header:
             CsvParserOptions options = new CsvParserOptions(false, ",");
             
-			// Create the Mapping:
+            // Create the Mapping:
             PersonMapping mapping = new PersonMapping(() -> new Person());
             
-			// Create the Parser:
+            // Create the Parser:
             CsvParser<Person> parser = new CsvParser<>(options, mapping);
             
-			// Path to read from:
+            // Path to read from:
             Path csvFile = FileSystems.getDefault().getPath("C:\\csv", "persons.txt");
             
-			// Holds the Results:
+            // Holds the Results:
             List<CsvMappingResult<Person>> result;
             
-			// Read the CSV File:
+            // Read the CSV File:
             try (Stream<CsvMappingResult<Person>> stream = parser.readFromFile(csvFile, StandardCharsets.UTF_8)) {
                 result = stream.collect(Collectors.toList()); // turn it into a List!
             }
             
-			// Do we have a result?
+            // Do we have a result?
             Assert.assertNotNull(result);
             
-			// Do we have two persons?
+            // Do we have two persons?
             Assert.assertEquals(2, result.size());
             
-			// Get the first person:
+            // Get the first person:
             Person person0 = result.get(0).getResult();
         
             Assert.assertEquals("Philipp", person0.firstName);
@@ -151,46 +151,46 @@ as :code:`UTF8`.
             Assert.assertEquals(1, person1.getBirthDate().getMonthValue());
             Assert.assertEquals(7, person1.getBirthDate().getDayOfMonth());
         }
-		
+        
     }
 
 
-	
+    
 Reading From a String
 """""""""""""""""""""
 
-Reading from a string is possible with the :csharp:`CsvParser.readFromString` method.
+Reading from a string is possible with the :java:`CsvParser.readFromString` method.
 
 .. code-block:: java
 
     public class CsvParserTest {
-	
+    
         @Test
         public void testParse_ReadFromString() throws Exception {
             
-			// Use , as column delimiter and do not skip the header:
+            // Use , as column delimiter and do not skip the header:
             CsvParserOptions options = new CsvParserOptions(false, ",");
-	    	
-			// Create the Mapping:
+            
+            // Create the Mapping:
             PersonMapping mapping = new PersonMapping(() -> new Person());
             
-			// Create the Parser:
+            // Create the Parser:
             CsvParser<Person> parser = new CsvParser<>(options, mapping);
             
-			// Define the Line Separator:
+            // Define the Line Separator:
             String lineSeparator = System.getProperty("line.separator");
             
-			// Create some CSV Data:
+            // Create some CSV Data:
             String csvData = "Philipp,Wagner,1986-05-12" + lineSeparator + "Max,Musterman,2000-01-07";
             
-			// Parse the CSV Data String:
+            // Parse the CSV Data String:
             List<CsvMappingResult<Person>> result =  parser.readFromString(csvData, new CsvReaderOptions(lineSeparator))
                     .collect(Collectors.toList()); // turn it into a List!
-	    			
+                    
             // Do we have results?
             Assert.assertNotNull(result);
         
-	    	// Do we have two persons?
+            // Do we have two persons?
             Assert.assertEquals(2, result.size());
         
             // Get the first person:
@@ -211,8 +211,8 @@ Reading from a string is possible with the :csharp:`CsvParser.readFromString` me
             Assert.assertEquals(1, person1.getBirthDate().getMonthValue());
             Assert.assertEquals(7, person1.getBirthDate().getDayOfMonth());
         }
-		
+        
     }    
-	
+    
 .. _JTinyCsvParser: https://github.com/bytefish/JTinyCsvParser
 .. MIT License: https://opensource.org/licenses/MIT

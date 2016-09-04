@@ -32,7 +32,7 @@
   
     <link rel="top" title="JTinyCsvParser 1.2 documentation" href="../index.html"/>
         <link rel="next" title="User Guide" href="userguide.html"/>
-        <link rel="prev" title="TinyCsvParser" href="../index.html"/> 
+        <link rel="prev" title="JTinyCsvParser" href="../index.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -149,9 +149,9 @@ information, please consult the full <a class="reference internal" href="usergui
 <p>JTinyCsvParser is available in the Central Maven Repository.</p>
 <p>You can add the following dependencies to your pom.xml to include JTinyCsvParser in your project.</p>
 <div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;dependency&gt;</span>
-        <span class="nt">&lt;groupId&gt;</span>de.bytefish<span class="nt">&lt;/groupId&gt;</span>
-        <span class="nt">&lt;artifactId&gt;</span>jtinycsvparser<span class="nt">&lt;/artifactId&gt;</span>
-        <span class="nt">&lt;version&gt;</span>1.2<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>de.bytefish<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>jtinycsvparser<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>1.2<span class="nt">&lt;/version&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 </pre></div>
 </div>
@@ -168,33 +168,33 @@ split at.</p>
 <p>The corresponding domain model in our C# code might look like this.</p>
 <div class="highlight-java"><div class="highlight"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Person</span> <span class="o">{</span>
 
-        <span class="kd">private</span> <span class="n">String</span> <span class="n">firstName</span><span class="o">;</span>
-        <span class="kd">private</span> <span class="n">String</span> <span class="n">lastName</span><span class="o">;</span>
-        <span class="kd">private</span> <span class="n">LocalDate</span> <span class="n">BirthDate</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">firstName</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">lastName</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">LocalDate</span> <span class="n">BirthDate</span><span class="o">;</span>
 
-        <span class="kd">public</span> <span class="n">String</span> <span class="nf">getFirstName</span><span class="o">()</span> <span class="o">{</span>
-                <span class="k">return</span> <span class="n">firstName</span><span class="o">;</span>
-        <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getFirstName</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">firstName</span><span class="o">;</span>
+    <span class="o">}</span>
 
-        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setFirstName</span><span class="o">(</span><span class="n">String</span> <span class="n">firstName</span><span class="o">)</span> <span class="o">{</span>
-                <span class="k">this</span><span class="o">.</span><span class="na">firstName</span> <span class="o">=</span> <span class="n">firstName</span><span class="o">;</span>
-        <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setFirstName</span><span class="o">(</span><span class="n">String</span> <span class="n">firstName</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">firstName</span> <span class="o">=</span> <span class="n">firstName</span><span class="o">;</span>
+    <span class="o">}</span>
 
-        <span class="kd">public</span> <span class="n">String</span> <span class="nf">getLastName</span><span class="o">()</span> <span class="o">{</span>
-                <span class="k">return</span> <span class="n">lastName</span><span class="o">;</span>
-        <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getLastName</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">lastName</span><span class="o">;</span>
+    <span class="o">}</span>
 
-        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setLastName</span><span class="o">(</span><span class="n">String</span> <span class="n">lastName</span><span class="o">)</span> <span class="o">{</span>
-                <span class="k">this</span><span class="o">.</span><span class="na">lastName</span> <span class="o">=</span> <span class="n">lastName</span><span class="o">;</span>
-        <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setLastName</span><span class="o">(</span><span class="n">String</span> <span class="n">lastName</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">lastName</span> <span class="o">=</span> <span class="n">lastName</span><span class="o">;</span>
+    <span class="o">}</span>
 
-        <span class="kd">public</span> <span class="n">LocalDate</span> <span class="nf">getBirthDate</span><span class="o">()</span> <span class="o">{</span>
-                <span class="k">return</span> <span class="n">BirthDate</span><span class="o">;</span>
-        <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">LocalDate</span> <span class="nf">getBirthDate</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">BirthDate</span><span class="o">;</span>
+    <span class="o">}</span>
 
-        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setBirthDate</span><span class="o">(</span><span class="n">LocalDate</span> <span class="n">birthDate</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">BirthDate</span> <span class="o">=</span> <span class="n">birthDate</span><span class="o">;</span>
-        <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setBirthDate</span><span class="o">(</span><span class="n">LocalDate</span> <span class="n">birthDate</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">BirthDate</span> <span class="o">=</span> <span class="n">birthDate</span><span class="o">;</span>
+    <span class="o">}</span>
 <span class="o">}</span>
 </pre></div>
 </div>
@@ -228,30 +228,30 @@ as <code class="code docutils literal"><span class="pre">UTF8</span></code>.</p>
         <span class="c1">// Use , as column delimiter and do not skip the header:</span>
         <span class="n">CsvParserOptions</span> <span class="n">options</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CsvParserOptions</span><span class="o">(</span><span class="kc">false</span><span class="o">,</span> <span class="s">&quot;,&quot;</span><span class="o">);</span>
 
-                    <span class="c1">// Create the Mapping:</span>
+        <span class="c1">// Create the Mapping:</span>
         <span class="n">PersonMapping</span> <span class="n">mapping</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PersonMapping</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="k">new</span> <span class="n">Person</span><span class="o">());</span>
 
-                    <span class="c1">// Create the Parser:</span>
+        <span class="c1">// Create the Parser:</span>
         <span class="n">CsvParser</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span> <span class="n">parser</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CsvParser</span><span class="o">&lt;&gt;(</span><span class="n">options</span><span class="o">,</span> <span class="n">mapping</span><span class="o">);</span>
 
-                    <span class="c1">// Path to read from:</span>
+        <span class="c1">// Path to read from:</span>
         <span class="n">Path</span> <span class="n">csvFile</span> <span class="o">=</span> <span class="n">FileSystems</span><span class="o">.</span><span class="na">getDefault</span><span class="o">().</span><span class="na">getPath</span><span class="o">(</span><span class="s">&quot;C:\\csv&quot;</span><span class="o">,</span> <span class="s">&quot;persons.txt&quot;</span><span class="o">);</span>
 
-                    <span class="c1">// Holds the Results:</span>
+        <span class="c1">// Holds the Results:</span>
         <span class="n">List</span><span class="o">&lt;</span><span class="n">CsvMappingResult</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;&gt;</span> <span class="n">result</span><span class="o">;</span>
 
-                    <span class="c1">// Read the CSV File:</span>
+        <span class="c1">// Read the CSV File:</span>
         <span class="k">try</span> <span class="o">(</span><span class="n">Stream</span><span class="o">&lt;</span><span class="n">CsvMappingResult</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;&gt;</span> <span class="n">stream</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="na">readFromFile</span><span class="o">(</span><span class="n">csvFile</span><span class="o">,</span> <span class="n">StandardCharsets</span><span class="o">.</span><span class="na">UTF_8</span><span class="o">))</span> <span class="o">{</span>
             <span class="n">result</span> <span class="o">=</span> <span class="n">stream</span><span class="o">.</span><span class="na">collect</span><span class="o">(</span><span class="n">Collectors</span><span class="o">.</span><span class="na">toList</span><span class="o">());</span> <span class="c1">// turn it into a List!</span>
         <span class="o">}</span>
 
-                    <span class="c1">// Do we have a result?</span>
+        <span class="c1">// Do we have a result?</span>
         <span class="n">Assert</span><span class="o">.</span><span class="na">assertNotNull</span><span class="o">(</span><span class="n">result</span><span class="o">);</span>
 
-                    <span class="c1">// Do we have two persons?</span>
+        <span class="c1">// Do we have two persons?</span>
         <span class="n">Assert</span><span class="o">.</span><span class="na">assertEquals</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="n">result</span><span class="o">.</span><span class="na">size</span><span class="o">());</span>
 
-                    <span class="c1">// Get the first person:</span>
+        <span class="c1">// Get the first person:</span>
         <span class="n">Person</span> <span class="n">person0</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">getResult</span><span class="o">();</span>
 
         <span class="n">Assert</span><span class="o">.</span><span class="na">assertEquals</span><span class="o">(</span><span class="s">&quot;Philipp&quot;</span><span class="o">,</span> <span class="n">person0</span><span class="o">.</span><span class="na">firstName</span><span class="o">);</span>
@@ -275,35 +275,35 @@ as <code class="code docutils literal"><span class="pre">UTF8</span></code>.</p>
 </div>
 <div class="section" id="reading-from-a-string">
 <h3>Reading From a String<a class="headerlink" href="#reading-from-a-string" title="Permalink to this headline">¶</a></h3>
-<p>Reading from a string is possible with the <a href="#id2"><span class="problematic" id="id3">:csharp:`CsvParser.readFromString`</span></a> method.</p>
+<p>Reading from a string is possible with the <code class="code java docutils literal"><span class="name"><span class="pre">CsvParser</span></span><span class="operator"><span class="pre">.</span></span><span class="name attribute"><span class="pre">readFromString</span></span></code> method.</p>
 <div class="highlight-java"><div class="highlight"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">CsvParserTest</span> <span class="o">{</span>
 
     <span class="nd">@Test</span>
     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testParse_ReadFromString</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
 
-                    <span class="c1">// Use , as column delimiter and do not skip the header:</span>
+        <span class="c1">// Use , as column delimiter and do not skip the header:</span>
         <span class="n">CsvParserOptions</span> <span class="n">options</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CsvParserOptions</span><span class="o">(</span><span class="kc">false</span><span class="o">,</span> <span class="s">&quot;,&quot;</span><span class="o">);</span>
 
-                    <span class="c1">// Create the Mapping:</span>
+        <span class="c1">// Create the Mapping:</span>
         <span class="n">PersonMapping</span> <span class="n">mapping</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PersonMapping</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="k">new</span> <span class="n">Person</span><span class="o">());</span>
 
-                    <span class="c1">// Create the Parser:</span>
+        <span class="c1">// Create the Parser:</span>
         <span class="n">CsvParser</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span> <span class="n">parser</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CsvParser</span><span class="o">&lt;&gt;(</span><span class="n">options</span><span class="o">,</span> <span class="n">mapping</span><span class="o">);</span>
 
-                    <span class="c1">// Define the Line Separator:</span>
+        <span class="c1">// Define the Line Separator:</span>
         <span class="n">String</span> <span class="n">lineSeparator</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="s">&quot;line.separator&quot;</span><span class="o">);</span>
 
-                    <span class="c1">// Create some CSV Data:</span>
+        <span class="c1">// Create some CSV Data:</span>
         <span class="n">String</span> <span class="n">csvData</span> <span class="o">=</span> <span class="s">&quot;Philipp,Wagner,1986-05-12&quot;</span> <span class="o">+</span> <span class="n">lineSeparator</span> <span class="o">+</span> <span class="s">&quot;Max,Musterman,2000-01-07&quot;</span><span class="o">;</span>
 
-                    <span class="c1">// Parse the CSV Data String:</span>
+        <span class="c1">// Parse the CSV Data String:</span>
         <span class="n">List</span><span class="o">&lt;</span><span class="n">CsvMappingResult</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;&gt;</span> <span class="n">result</span> <span class="o">=</span>  <span class="n">parser</span><span class="o">.</span><span class="na">readFromString</span><span class="o">(</span><span class="n">csvData</span><span class="o">,</span> <span class="k">new</span> <span class="n">CsvReaderOptions</span><span class="o">(</span><span class="n">lineSeparator</span><span class="o">))</span>
                 <span class="o">.</span><span class="na">collect</span><span class="o">(</span><span class="n">Collectors</span><span class="o">.</span><span class="na">toList</span><span class="o">());</span> <span class="c1">// turn it into a List!</span>
 
         <span class="c1">// Do we have results?</span>
         <span class="n">Assert</span><span class="o">.</span><span class="na">assertNotNull</span><span class="o">(</span><span class="n">result</span><span class="o">);</span>
 
-            <span class="c1">// Do we have two persons?</span>
+        <span class="c1">// Do we have two persons?</span>
         <span class="n">Assert</span><span class="o">.</span><span class="na">assertEquals</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="n">result</span><span class="o">.</span><span class="na">size</span><span class="o">());</span>
 
         <span class="c1">// Get the first person:</span>
@@ -342,7 +342,7 @@ as <code class="code docutils literal"><span class="pre">UTF8</span></code>.</p>
         <a href="userguide.html" class="btn btn-neutral float-right" title="User Guide" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../index.html" class="btn btn-neutral" title="TinyCsvParser" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../index.html" class="btn btn-neutral" title="JTinyCsvParser" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
