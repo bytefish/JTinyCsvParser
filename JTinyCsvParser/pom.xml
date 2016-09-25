@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>de.bytefish</groupId>
     <artifactId>jtinycsvparser</artifactId>
     <version>1.3</version>
@@ -11,7 +10,6 @@
     <packaging>jar</packaging>
     <description>JTinyCsvParser is a high-performance CSV Parser for Java.</description>
     <url>http://www.github.com/bytefish/JTinyCsvParser</url>
-
     <build>
         <plugins>
             <plugin>
@@ -26,7 +24,8 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>2.4</version><!--$NO-MVN-MAN-VER$-->
+                <version>2.4</version>
+                <!--$NO-MVN-MAN-VER$-->
                 <configuration>
                     <archive>
                         <manifest>
@@ -39,7 +38,8 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
-                <version>1.3.1</version><!--$NO-MVN-MAN-VER$-->
+                <version>1.3.1</version>
+                <!--$NO-MVN-MAN-VER$-->
                 <executions>
                     <execution>
                         <id>enforce-maven</id>
@@ -59,14 +59,12 @@
             </plugin>
         </plugins>
     </build>
-
     <licenses>
         <license>
             <name>MIT License</name>
             <url>https://opensource.org/licenses/MIT</url>
         </license>
     </licenses>
-
     <developers>
         <developer>
             <email>bytefish@gmx.de</email>
@@ -75,29 +73,24 @@
             <id>bytefish</id>
         </developer>
     </developers>
-
     <scm>
         <url>https://github.com/bytefish/JTinyCsvParser</url>
         <connection>scm:git:git://github.com/bytefish/JTinyCsvParser.git</connection>
         <developerConnection>scm:git:git@github.com:bytefish/JTinyCsvParser.git</developerConnection>
     </scm>
-
     <distributionManagement>
-      <snapshotRepository>
-       <id>ossrh</id>
-       <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-      </snapshotRepository>
-      <repository>
-       <id>ossrh</id>
-       <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-      </repository>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
     </distributionManagement>
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
-     
     <profiles>
         <profile>
             <id>release</id>
@@ -128,65 +121,58 @@
                                 <mavenExecutorId>forked-path</mavenExecutorId>
                                 <useReleaseProfile>false</useReleaseProfile>
                                 <arguments>${arguments} -Psonatype-oss-release</arguments>
-                        </configuration>
+                            </configuration>
                         </plugin>
                     </plugins>
                 </pluginManagement>
             </build>
         </profile>
-
         <profile>
-			<id>docs-and-source</id>
-			<build>
-				<plugins>
+            <id>docs-and-source</id>
+            <build>
+                <plugins>
                     <plugin>
-                      <groupId>org.apache.maven.plugins</groupId>
-                      <artifactId>maven-source-plugin</artifactId>
-                      <version>2.2.1</version>
-                      <executions>
-                        <execution>
-                          <id>attach-sources</id>
-                          <goals>
-                            <goal>jar-no-fork</goal>
-                          </goals>
-                        </execution>
-                      </executions>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>2.2.1</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
                     </plugin>
                     <plugin>
-                      <groupId>org.apache.maven.plugins</groupId>
-                      <artifactId>maven-javadoc-plugin</artifactId>
-                      <version>2.9.1</version>
-                      <executions>
-                        <execution>
-                          <id>attach-javadocs</id>
-                          <goals>
-                            <goal>jar</goal>
-                          </goals>
-                        </execution>
-                      </executions>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>2.9.1</version>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
                     </plugin>
-				</plugins>
-			</build>
-		</profile>
-        
+                </plugins>
+            </build>
+        </profile>
     </profiles>
     <dependencies>
-
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
             <version>1.10.19</version>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
-
-
 </project>
