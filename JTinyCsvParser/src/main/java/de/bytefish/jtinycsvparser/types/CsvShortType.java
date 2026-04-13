@@ -10,4 +10,10 @@ public interface CsvShortType extends CsvType<Short> {
             setter.accept(entity, val);
         });
     }
+    default <T> CsvColumnBinding<T> primitive(int columnIndex, ObjShortConsumer<T> setter) {
+        return new CsvColumnBinding<>(columnIndex, (entity, raw) -> {
+            short val = (raw == null || raw.isBlank()) ? 0 : Short.parseShort(raw.trim());
+            setter.accept(entity, val);
+        });
+    }
 }

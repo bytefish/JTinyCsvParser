@@ -11,4 +11,12 @@ public interface CsvType<V> {
             else setter.accept(entity, parse(raw));
         });
     }
+
+    default <T> CsvColumnBinding<T> boxed(int columnIndex, BiConsumer<T, V> setter) {
+        return new CsvColumnBinding<>(columnIndex, (entity, raw) -> {
+            if (raw == null || raw.isBlank()) setter.accept(entity, null);
+            else setter.accept(entity, parse(raw));
+        });
+    }
 }
+

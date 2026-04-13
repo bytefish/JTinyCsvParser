@@ -10,4 +10,10 @@ public interface CsvDoubleType extends CsvType<Double> {
             setter.accept(entity, val);
         });
     }
+    default <T> CsvColumnBinding<T> primitive(int columnIndex, ObjDoubleConsumer<T> setter) {
+        return new CsvColumnBinding<>(columnIndex, (entity, raw) -> {
+            double val = (raw == null || raw.isBlank()) ? 0.0 : Double.parseDouble(raw.trim());
+            setter.accept(entity, val);
+        });
+    }
 }

@@ -21,8 +21,18 @@ public class FluentMapping<T> implements ICsvMapping<T>, IHeaderBinder {
         return this;
     }
 
+    public FluentMapping<T> map(String columnName, BiConsumer<T, String> binder) {
+        return map(new CsvColumnBinding<>(columnName, binder));
+    }
+
+    public FluentMapping<T> map(int columnIndex, BiConsumer<T, String> binder) {
+        return map(new CsvColumnBinding<>(columnIndex, binder));
+    }
+
     @Override
-    public boolean needsHeaderResolution() { return !headersResolved; }
+    public boolean needsHeaderResolution() {
+        return !headersResolved && bindings.stream().anyMatch(b -> b.columnName() != null);
+    }
 
     @Override
     public CsvHeaderResolution bindHeaders(CsvRow headerRow) {
@@ -38,11 +48,16 @@ public class FluentMapping<T> implements ICsvMapping<T>, IHeaderBinder {
 
         resolvedIndices = new int[bindings.size()];
         for (int i = 0; i < bindings.size(); i++) {
-            String boundName = bindings.get(i).columnName().trim().toLowerCase(Locale.ROOT);
-            if (boundName.startsWith("\uFEFF")) boundName = boundName.substring(1);
+            CsvColumnBinding<T> binding = bindings.get(i);
+            if (binding.columnIndex() != null) {
+                resolvedIndices[i] = binding.columnIndex();
+            } else {
+                String boundName = binding.columnName().trim().toLowerCase(Locale.ROOT);
+                if (boundName.startsWith("\uFEFF")) boundName = boundName.substring(1);
 
-            Integer idx = headerMap.get(boundName);
-            resolvedIndices[i] = (idx != null) ? idx : -1;
+                Integer idx = headerMap.get(boundName);
+                resolvedIndices[i] = (idx != null) ? idx : -1;
+            }
         }
         headersResolved = true;
         return new CsvHeaderResolution(resolvedIndices);
@@ -53,9 +68,17 @@ public class FluentMapping<T> implements ICsvMapping<T>, IHeaderBinder {
         try {
             T entity = factory.get();
             for (int i = 0; i < bindings.size(); i++) {
-                int colIdx = headerResolution.getColumnIndex(i);
+                int colIdx = -1;
+                CsvColumnBinding<T> binding = bindings.get(i);
+
+                if (headerResolution != null) {
+                    colIdx = headerResolution.getColumnIndex(i);
+                } else if (binding.columnIndex() != null) {
+                    colIdx = binding.columnIndex();
+                }
+
                 if (colIdx != -1) {
-                    bindings.get(i).binder().accept(entity, row.getField(colIdx));
+                    binding.binder().accept(entity, row.getField(colIdx));
                 }
             }
             return new CsvMappingResult.Success<>(entity, row.getRecordIndex(), row.getLineNumber());
@@ -63,13 +86,4 @@ public class FluentMapping<T> implements ICsvMapping<T>, IHeaderBinder {
             return new CsvMappingResult.Error<>(new CsvMappingError(row.getRecordIndex(), row.getLineNumber(), -1, ex.getMessage()), row.getRecordIndex(), row.getLineNumber());
         }
     }
-
-    /**
-     * Extremely simple entry point for custom logic using a BiConsumer directly.
-     * Equivalent to a custom PgType/PgColumn pattern.
-     */
-    public FluentMapping<T> map(String columnName, BiConsumer<T, String> binder) {
-        return map(new CsvColumnBinding<>(columnName, binder));
-    }
-
 }

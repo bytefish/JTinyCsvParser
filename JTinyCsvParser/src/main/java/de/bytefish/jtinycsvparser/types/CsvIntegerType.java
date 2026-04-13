@@ -10,4 +10,10 @@ public interface CsvIntegerType extends CsvType<Integer> {
             setter.accept(entity, val);
         });
     }
+    default <T> CsvColumnBinding<T> primitive(int columnIndex, ObjIntConsumer<T> setter) {
+        return new CsvColumnBinding<>(columnIndex, (entity, raw) -> {
+            int val = (raw == null || raw.isBlank()) ? 0 : Integer.parseInt(raw.trim());
+            setter.accept(entity, val);
+        });
+    }
 }

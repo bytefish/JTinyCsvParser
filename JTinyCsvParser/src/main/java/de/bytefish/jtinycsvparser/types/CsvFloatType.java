@@ -10,4 +10,10 @@ public interface CsvFloatType extends CsvType<Float> {
             setter.accept(entity, val);
         });
     }
+    default <T> CsvColumnBinding<T> primitive(int columnIndex, ObjFloatConsumer<T> setter) {
+        return new CsvColumnBinding<>(columnIndex, (entity, raw) -> {
+            float val = (raw == null || raw.isBlank()) ? 0.0f : Float.parseFloat(raw.trim());
+            setter.accept(entity, val);
+        });
+    }
 }

@@ -10,4 +10,10 @@ public interface CsvBooleanType extends CsvType<Boolean> {
             setter.accept(entity, val);
         });
     }
+    default <T> CsvColumnBinding<T> primitive(int columnIndex, ObjBooleanConsumer<T> setter) {
+        return new CsvColumnBinding<>(columnIndex, (entity, raw) -> {
+            boolean val = raw != null && Boolean.parseBoolean(raw.trim());
+            setter.accept(entity, val);
+        });
+    }
 }

@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CsvParserTest {
+public class CsvParserTest {
 
     private final CsvOptions defaultOptions = new CsvOptions(',', '"', '\\', '#', true, StandardCharsets.UTF_8);
 
@@ -86,6 +86,58 @@ class CsvParserTest {
         assertEquals(101, user.id());
         assertEquals("Alice", user.name());
         assertEquals(88.5, user.score());
+    }
+
+    @Test
+    @DisplayName("Should parse CSV into a POJO using FluentMapping with index-based columns")
+    void testFluentMappingWithIndices() {
+        // Arrange
+        record User(int id, String name, double score) {
+            static class MutableUser {
+                int id; String name; double score;
+                void setId(int id) { this.id = id; }
+                void setName(String name) { this.name = name; }
+                void setScore(double score) { this.score = score; }
+                User toUser() { return new User(id, name, score); }
+            }
+        }
+
+        // CSV data completely without a header row
+        String csv = """
+                101,Alice,88.5
+                102,Bob,92.0
+                """;
+
+        // Since there is no header, we configure the options to not skip the first line
+        CsvOptions optionsWithoutHeader = new CsvOptions(',', '"', '\\', '#', false, StandardCharsets.UTF_8);
+
+        // Mapping directly via column index (0-based)
+        FluentMapping<User.MutableUser> mapping = new FluentMapping<>(User.MutableUser::new)
+                .map(CsvTypes.INTEGER.primitive(0, User.MutableUser::setId))
+                .map(CsvTypes.STRING.boxed(1, User.MutableUser::setName))
+                .map(CsvTypes.DOUBLE.primitive(2, User.MutableUser::setScore));
+
+        CsvParser<User.MutableUser> parser = new CsvParser<>(optionsWithoutHeader, mapping);
+
+        // Act
+        var results = parser.stream(csv).toList();
+
+        // Assert
+        assertEquals(2, results.size());
+
+        // Assert first record
+        assertTrue(results.get(0) instanceof CsvMappingResult.Success);
+        User user1 = ((CsvMappingResult.Success<User.MutableUser>) results.get(0)).entity().toUser();
+        assertEquals(101, user1.id());
+        assertEquals("Alice", user1.name());
+        assertEquals(88.5, user1.score());
+
+        // Assert second record
+        assertTrue(results.get(1) instanceof CsvMappingResult.Success);
+        User user2 = ((CsvMappingResult.Success<User.MutableUser>) results.get(1)).entity().toUser();
+        assertEquals(102, user2.id());
+        assertEquals("Bob", user2.name());
+        assertEquals(92.0, user2.score());
     }
 
     @Test
