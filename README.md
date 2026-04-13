@@ -25,26 +25,24 @@ JTinyCsvParser is a high-performance CSV parsing library for Java 21. Optimized 
     -   [8.1 Configuring Existing Types](#81-configuring-existing-types "null")
     -   [8.2 Writing a Custom Type](#82-writing-a-custom-type "null")
 
-## 1\. Setup
+## 1. Setup
 
 To include JTinyCsvParser in your project, add the dependency to your build tool.
 
 **Maven:**
 
-```
+```xml
 <dependency>
     <groupId>de.bytefish</groupId>
     <artifactId>jtinycsvparser</artifactId>
     <version>2.0.0</version>
 </dependency>
-
 ```
 
 **Gradle:**
 
 ```
 implementation 'de.bytefish:jtinycsvparser:3.0.0'
-
 ```
 
 ## 2. Quick Start
