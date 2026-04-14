@@ -14,11 +14,6 @@ import java.util.function.Consumer;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-/**
- * A high-performance CSV parser for Java 21, optimized for use with
- * Virtual Threads.
- * The API is fully designed around Java Streams.
- */
 public class CsvParser<TEntity> {
 
     private final CsvOptions options;
@@ -32,7 +27,6 @@ public class CsvParser<TEntity> {
         this.mapping = mapping;
         this.charset = options.encoding() != null ? options.encoding() : StandardCharsets.UTF_8;
     }
-    // --- Streaming API ---
 
     public Stream<CsvMappingResult<TEntity>> stream(String csvContent) {
         InputStream is = new ByteArrayInputStream(csvContent.getBytes(charset));
@@ -42,7 +36,11 @@ public class CsvParser<TEntity> {
     public Stream<CsvMappingResult<TEntity>> stream(Path path) throws IOException {
         InputStream is = Files.newInputStream(path);
         return stream(is).onClose(() -> {
-            try { is.close(); } catch (IOException e) { throw new UncheckedIOException(e); }
+            try {
+                is.close();
+            } catch (IOException e) {
+                throw new UncheckedIOException(e);
+            }
         });
     }
 
@@ -178,25 +176,17 @@ public class CsvParser<TEntity> {
         String trimmed = line.stripLeading();
         return !trimmed.isEmpty() && trimmed.charAt(0) == options.commentCharacter();
     }
-    /**
-     * Creates a parser that maps rows to Map<String, Object> using the provided options and schema.
-     */
+
     public static CsvParser<Map<String, Object>> createMapParser(CsvOptions options, CsvSchema schema) {
         return new CsvParser<>(options, new CsvSchemaMapping(schema));
     }
 
-    /**
-     * Creates a parser that maps rows to Map<String, Object> using a fluent schema configuration.
-     */
     public static CsvParser<Map<String, Object>> createMapParser(CsvOptions options, Consumer<CsvSchema> configureSchema) {
         CsvSchema schema = new CsvSchema();
         configureSchema.accept(schema);
         return new CsvParser<>(options, new CsvSchemaMapping(schema));
     }
 
-    /**
-     * Creates a parser that maps rows to Map<String, Object> with default string-only mapping.
-     */
     public static CsvParser<Map<String, Object>> createMapParser(CsvOptions options) {
         return new CsvParser<>(options, new CsvSchemaMapping());
     }

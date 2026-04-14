@@ -42,7 +42,7 @@ To include JTinyCsvParser in your project, add the dependency to your build tool
 **Gradle:**
 
 ```
-implementation 'de.bytefish:jtinycsvparser:3.0.0'
+implementation 'de.bytefish:jtinycsvparser:2.0.0'
 ```
 
 ## 2. Quick Start

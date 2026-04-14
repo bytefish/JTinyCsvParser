@@ -2,6 +2,7 @@ package de.bytefish.jtinycsvparser.core;
 
 
 public class CsvHeaderResolution {
+
     private final int[] columnMapping;
 
     public CsvHeaderResolution(int[] mapping) { this.columnMapping = mapping; }

@@ -3,6 +3,7 @@ package de.bytefish.jtinycsvparser.core;
 import java.util.function.BiConsumer;
 
 public interface CsvType<V> {
+
     V parse(String value);
 
     default <T> CsvColumnBinding<T> boxed(String columnName, BiConsumer<T, V> setter) {

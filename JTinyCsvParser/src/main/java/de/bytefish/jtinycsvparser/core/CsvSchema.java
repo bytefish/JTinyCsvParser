@@ -4,10 +4,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-/**
- * Defines a schema for column-based type mapping, especially useful for DictionaryMapping.
- */
 public class CsvSchema {
+
     private final Map<String, CsvType<?>> typeMap = new HashMap<>();
 
     private String normalize(String key) {
