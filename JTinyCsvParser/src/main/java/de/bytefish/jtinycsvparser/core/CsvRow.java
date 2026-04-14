@@ -1,7 +1,5 @@
 package de.bytefish.jtinycsvparser.core;
 
-import de.bytefish.jtinycsvparser.internals.CsvFieldRange;
-
 public class CsvRow {
     private final String rawLine;
     private final CsvFieldRange[] ranges;

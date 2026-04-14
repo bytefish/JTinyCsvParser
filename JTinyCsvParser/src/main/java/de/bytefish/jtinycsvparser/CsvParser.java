@@ -1,8 +1,8 @@
 package de.bytefish.jtinycsvparser;
 
 import de.bytefish.jtinycsvparser.core.*;
-import de.bytefish.jtinycsvparser.internals.CsvFieldRange;
-import de.bytefish.jtinycsvparser.mappings.DynamicRecordMapping;
+import de.bytefish.jtinycsvparser.core.CsvFieldRange;
+import de.bytefish.jtinycsvparser.mappings.CsvSchemaMapping;
 
 import java.io.*;
 import java.nio.charset.Charset;
@@ -181,24 +181,24 @@ public class CsvParser<TEntity> {
     /**
      * Creates a parser that maps rows to Map<String, Object> using the provided options and schema.
      */
-    public static CsvParser<Map<String, Object>> createDynamicRecordParser(CsvOptions options, CsvSchema schema) {
-        return new CsvParser<>(options, new DynamicRecordMapping(schema));
+    public static CsvParser<Map<String, Object>> createMapParser(CsvOptions options, CsvSchema schema) {
+        return new CsvParser<>(options, new CsvSchemaMapping(schema));
     }
 
     /**
      * Creates a parser that maps rows to Map<String, Object> using a fluent schema configuration.
      */
-    public static CsvParser<Map<String, Object>> createDynamicRecordParser(CsvOptions options, Consumer<CsvSchema> configureSchema) {
+    public static CsvParser<Map<String, Object>> createMapParser(CsvOptions options, Consumer<CsvSchema> configureSchema) {
         CsvSchema schema = new CsvSchema();
         configureSchema.accept(schema);
-        return new CsvParser<>(options, new DynamicRecordMapping(schema));
+        return new CsvParser<>(options, new CsvSchemaMapping(schema));
     }
 
     /**
      * Creates a parser that maps rows to Map<String, Object> with default string-only mapping.
      */
-    public static CsvParser<Map<String, Object>> createDynamicRecordParser(CsvOptions options) {
-        return new CsvParser<>(options, new DynamicRecordMapping());
+    public static CsvParser<Map<String, Object>> createMapParser(CsvOptions options) {
+        return new CsvParser<>(options, new CsvSchemaMapping());
     }
 
 }

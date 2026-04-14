@@ -1,17 +1,16 @@
 package de.bytefish.jtinycsvparser.mappings;
 
-
 import de.bytefish.jtinycsvparser.core.*;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class DynamicRecordMapping implements ICsvMapping<Map<String, Object>>, IHeaderBinder {
+public class CsvSchemaMapping implements ICsvMapping<Map<String, Object>>, IHeaderBinder {
     private final CsvSchema schema;
     private String[] columnNames;
 
-    public DynamicRecordMapping() { this(new CsvSchema()); }
-    public DynamicRecordMapping(CsvSchema schema) { this.schema = schema; }
+    public CsvSchemaMapping() { this(new CsvSchema()); }
+    public CsvSchemaMapping(CsvSchema schema) { this.schema = schema; }
 
     @Override public boolean needsHeaderResolution() { return columnNames == null; }
 

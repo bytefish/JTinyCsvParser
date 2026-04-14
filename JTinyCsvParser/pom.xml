@@ -7,7 +7,7 @@
     <artifactId>jtinycsvparser</artifactId>
     <version>2.0.0</version>
     <name>jtinycsvparser</name>
-    <description>PgBulkInsert is a Java library for Bulk Inserts with PostgreSQL.</description>
+    <description>JTinyCsvParser is a CSV Parser for modern Java.</description>
     <url>http://www.github.com/bytefish/PgBulkInsert</url>
     <!-- Define the License -->
     <licenses>

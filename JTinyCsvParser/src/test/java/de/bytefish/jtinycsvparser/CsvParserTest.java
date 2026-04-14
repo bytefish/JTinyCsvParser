@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -28,7 +27,7 @@ public class CsvParserTest {
                 2,Jane Smith,false
                 """;
 
-        CsvParser<Map<String, Object>> parser = CsvParser.createDynamicRecordParser(defaultOptions, schema -> {
+        CsvParser<Map<String, Object>> parser = CsvParser.createMapParser(defaultOptions, schema -> {
             schema.add("id", CsvTypes.INTEGER);
             schema.add("active", CsvTypes.BOOLEAN);
         });
@@ -150,7 +149,7 @@ public class CsvParserTest {
                 2,Valid Name
                 """;
 
-        CsvParser<Map<String, Object>> parser = CsvParser.createDynamicRecordParser(defaultOptions);
+        CsvParser<Map<String, Object>> parser = CsvParser.createMapParser(defaultOptions);
 
         // Act
         var results = parser.stream(csv).toList();
@@ -175,7 +174,7 @@ public class CsvParserTest {
                 1,A
                 """;
 
-        CsvParser<Map<String, Object>> parser = CsvParser.createDynamicRecordParser(defaultOptions);
+        CsvParser<Map<String, Object>> parser = CsvParser.createMapParser(defaultOptions);
 
         // Act
         var results = parser.stream(csv).toList();
@@ -199,7 +198,7 @@ public class CsvParserTest {
                 Integer.parseInt(val.substring(val.indexOf('_') + 1))
         );
 
-        CsvParser<Map<String, Object>> parser = CsvParser.createDynamicRecordParser(defaultOptions, schema -> {
+        CsvParser<Map<String, Object>> parser = CsvParser.createMapParser(defaultOptions, schema -> {
             schema.add("code", errorCodeType);
         });
 
