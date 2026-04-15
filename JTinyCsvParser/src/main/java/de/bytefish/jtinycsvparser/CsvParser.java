@@ -70,7 +70,9 @@ public class CsvParser<TEntity> {
                             continue;
                         }
                         ProcessingStep<TEntity> step = processLine(record.content, currentRanges, recordIndex, lineNumber, record.linesConsumed, isInitialized, headerResolution);
-                        if (step.result() != null) buffer.add(step.result());
+                        if (step.result() != null) {
+                            buffer.add(step.result());
+                        }
                         headerResolution = step.headerResolution();
                         isInitialized = step.initialized();
                         recordIndex = step.nextRecordIndex();
@@ -83,7 +85,9 @@ public class CsvParser<TEntity> {
 
             @Override
             public CsvMappingResult<TEntity> next() {
-                if (!hasNext()) throw new NoSuchElementException();
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
                 return buffer.remove(0);
             }
         };
@@ -93,7 +97,9 @@ public class CsvParser<TEntity> {
     private record ProcessingStep<T>(CsvMappingResult<T> result, int nextRecordIndex, int nextLineNumber, boolean initialized, CsvHeaderResolution headerResolution, CsvFieldRange[] currentRangeBuffer) {}
 
     private ProcessingStep<TEntity> processLine(String line, CsvFieldRange[] rangeBuffer, int recordIdx, int lineNo, int consumed, boolean initialized, CsvHeaderResolution headerResolution) {
-        if (isComment(line)) return new ProcessingStep<>(new CsvMappingResult.Comment<>(line, -1, lineNo), recordIdx, lineNo + consumed, initialized, headerResolution, rangeBuffer);
+        if (isComment(line)) {
+            return new ProcessingStep<>(new CsvMappingResult.Comment<>(line, -1, lineNo), recordIdx, lineNo + consumed, initialized, headerResolution, rangeBuffer);
+        }
         CsvFieldRange[] currentRanges = rangeBuffer;
         boolean currentInitialized = initialized;
         CsvHeaderResolution currentResolution = headerResolution;
@@ -108,7 +114,9 @@ public class CsvParser<TEntity> {
                 currentResolution = binder.bindHeaders(headerRow);
                 return new ProcessingStep<>(null, currentRecordIdx, lineNo + consumed, currentInitialized, currentResolution, currentRanges);
             }
-            if (options.skipHeader()) return new ProcessingStep<>(null, currentRecordIdx, lineNo + consumed, currentInitialized, currentResolution, currentRanges);
+            if (options.skipHeader()) {
+                return new ProcessingStep<>(null, currentRecordIdx, lineNo + consumed, currentInitialized, currentResolution, currentRanges);
+            }
         }
 
         SplitResult split = splitLine(line, currentRanges);
@@ -131,7 +139,9 @@ public class CsvParser<TEntity> {
 
         for (int i = 0; i < line.length(); i++) {
             char c = line.charAt(i);
-            if (rangeCount >= currentRanges.length) currentRanges = Arrays.copyOf(currentRanges, currentRanges.length * 2);
+            if (rangeCount >= currentRanges.length) {
+                currentRanges = Arrays.copyOf(currentRanges, currentRanges.length * 2);
+            }
             switch (state) {
                 case NORMAL -> {
                     if (c == options.quoteChar()) { state = ParseState.IN_QUOTED_FIELD; fieldStart = i; }
@@ -142,7 +152,9 @@ public class CsvParser<TEntity> {
                 }
                 case IN_QUOTED_FIELD -> {
                     if (c == options.escapeChar() && i + 1 < line.length() && line.charAt(i + 1) == options.quoteChar()) { needsUnescape = true; i++; }
-                    else if (c == options.quoteChar()) state = ParseState.AFTER_QUOTE;
+                    else if (c == options.quoteChar()) {
+                        state = ParseState.AFTER_QUOTE;
+                    }
                 }
                 case AFTER_QUOTE -> {
                     if (c == options.delimiter()) {
@@ -152,7 +164,9 @@ public class CsvParser<TEntity> {
                 }
             }
         }
-        if (rangeCount >= currentRanges.length) currentRanges = Arrays.copyOf(currentRanges, currentRanges.length + 1);
+        if (rangeCount >= currentRanges.length) {
+            currentRanges = Arrays.copyOf(currentRanges, currentRanges.length + 1);
+        }
         currentRanges[rangeCount++] = new CsvFieldRange(fieldStart, line.length() - fieldStart, state != ParseState.NORMAL, needsUnescape);
         return new SplitResult(currentRanges, rangeCount);
     }
@@ -163,16 +177,26 @@ public class CsvParser<TEntity> {
         sb.setLength(0); int lines = 0; boolean inQuotes = false; String line;
         while ((line = reader.readLine()) != null) {
             lines++;
-            if (sb.length() > 0) sb.append('\n');
+            if (sb.length() > 0) {
+                sb.append('\n');
+            }
             sb.append(line);
-            for (int i = 0; i < line.length(); i++) if (line.charAt(i) == options.quoteChar()) inQuotes = !inQuotes;
-            if (!inQuotes) return new LogicalRecord(sb.toString(), lines, false);
+            for (int i = 0; i < line.length(); i++) {
+                if (line.charAt(i) == options.quoteChar()) {
+                    inQuotes = !inQuotes;
+                }
+            }
+            if (!inQuotes) {
+                return new LogicalRecord(sb.toString(), lines, false);
+            }
         }
         return sb.length() > 0 ? new LogicalRecord(sb.toString(), lines, inQuotes) : null;
     }
 
     private boolean isComment(String line) {
-        if (options.commentCharacter() == null) return false;
+        if (options.commentCharacter() == null) {
+            return false;
+        }
         String trimmed = line.stripLeading();
         return !trimmed.isEmpty() && trimmed.charAt(0) == options.commentCharacter();
     }
@@ -190,5 +214,4 @@ public class CsvParser<TEntity> {
     public static CsvParser<Map<String, Object>> createMapParser(CsvOptions options) {
         return new CsvParser<>(options, new CsvSchemaMapping());
     }
-
 }
